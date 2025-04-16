@@ -3,21 +3,43 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "prisma:reset": "prisma migrate reset --schema=src/prisma/schema.prisma",
+    "prisma:generate": "prisma generate --schema=src/prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema=src/prisma/schema.prisma",
+    "prisma:push": "prisma db push --schema=src/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.0",
+    "@types/pg": "^8.11.11",
+    "@types/request-ip": "^0.0.41",
     "nodemon": "^3.1.9",
+    "prisma": "^6.6.0",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^6.6.0",
+    "@prisma/client": "^6.6.0",
+    "@types/cors": "^2.8.17",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.14.1",
+    "request-ip": "^3.3.0",
+    "zod": "^3.24.2"
   }
 }
