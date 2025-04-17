@@ -1,8 +1,8 @@
 import {Request, Response, NextFunction} from "express";
-import UserService from "@/services/UserService";
-import SessionService from "@/services/SessionService";
 import SuccessResponse from "@/response/SuccessResponse";
 import {COOKIE_CONFIG, IP, UA} from "@/utils/constants";
+import {loginUser, refreshUser, registerUser} from "@/modules/auth/useCases/authUseCases";
+import SessionRepository from "@/modules/auth/SessionRepository";
 
 class AuthController {
     async login(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -12,7 +12,7 @@ class AuthController {
             // const {fingerprint} = req.body;
             const fingerprint = '1234567890';
 
-            const userData = await UserService.login({...req.body, ip, ua, fingerprint});
+            const userData = await loginUser({ip, ua, fingerprint, ...req.body});
 
             res.cookie(COOKIE_CONFIG.name, userData.refreshToken, COOKIE_CONFIG.options);
             res.status(200)
@@ -32,7 +32,7 @@ class AuthController {
             // const {fingerprint} = req.body;
             const fingerprint = '1234567890';
 
-            const userData = await UserService.register({...req.body, ip, ua, fingerprint});
+            const userData = await registerUser({ip, ua, fingerprint, ...req.body});
 
             res.cookie(COOKIE_CONFIG.name, userData.refreshToken, COOKIE_CONFIG.options);
             res.status(200)
@@ -53,7 +53,7 @@ class AuthController {
             // const {fingerprint} = req.body;
             const fingerprint = '1234567890';
 
-            const sessionData = await SessionService.refresh({token, ip, ua, fingerprint});
+            const sessionData = await refreshUser({token, ip, ua, fingerprint});
 
             res.cookie(COOKIE_CONFIG.name, sessionData.refreshToken, COOKIE_CONFIG.options);
             res.status(200)
@@ -70,7 +70,7 @@ class AuthController {
         try {
             const token = req.cookies[COOKIE_CONFIG.name];
 
-            await SessionService.destroy(token);
+            await SessionRepository.deleteByToken(token);
 
             res.json(SuccessResponse.success("разлогин успешен"));
         } catch (err) {

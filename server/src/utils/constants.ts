@@ -16,3 +16,9 @@ export const COOKIE_CONFIG = {
         sameSite: true
     }
 };
+
+export enum statusCodes {
+    NOT_FOUND = 404,
+    UNAUTHORIZED = 401,
+    VALIDATION_ERROR = 403,
+}

@@ -1,5 +1,5 @@
 import {z} from "zod";
-import UserService from "@/services/UserService";
+import UserRepository from "@/modules/users/UserRepository";
 
 export const loginSchema = z.object({
     email: z.string().email(),
@@ -10,7 +10,7 @@ export const registrationSchema = z.object({
     email: z
         .string({message: "неверный тип данных"})
         .email({message: "неверная почта"})
-        .refine(async (email) => !(await UserService.isUserExists(email)),
+        .refine(async (email) => !(await UserRepository.isEmailExists(email)),
             {message: "пользователь с таким email уже зарегестрирован"}),
 
     password: z.string(),
@@ -18,4 +18,9 @@ export const registrationSchema = z.object({
     isAcceptedTerms: z.boolean()
 });
 
-export type AuthData = z.infer<typeof loginSchema>
+export type LoginData = z.infer<typeof loginSchema>
+export interface IAuthData extends LoginData {
+    ip: string;
+    ua: string;
+    fingerprint: string;
+}
