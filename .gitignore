@@ -1,5 +1,9 @@
-.idea
+/.idea
 
 /client/node_modules
+/client/tmp.md
+
 /docker
+
+/server/.env
 /server/node_modules

@@ -1,6 +1,7 @@
+import {Outlet} from "react-router";
+
 const App = () => {
-    return (
-        <>Hello world!</>
-    )
+    return <Outlet/>;
 }
+
 export default App

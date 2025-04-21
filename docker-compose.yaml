@@ -1,9 +1,9 @@
 services:
   db:
-    image: postgres:15
-    container_name: finance_postgres
+    image: postgres:latest
+    container_name: frello_kanban
     environment:
-      POSTGRES_DB: finance
+      POSTGRES_DB: frello_kanban
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
     volumes:
