@@ -5,3 +5,8 @@ export interface IUser {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface IUserData {
+    user: IUser;
+    token: string;
+}

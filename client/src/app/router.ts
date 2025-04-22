@@ -50,7 +50,7 @@ export const router = createBrowserRouter(
 
 //???
 function loaderGuard(mode: "user" | "guest") {
-    const isAuth = useUserStore.getState().isAuth;
+    const isAuth = useUserStore.getState().token;
 
     if (mode === "guest") {
         if (isAuth) return redirect("/dashboard");

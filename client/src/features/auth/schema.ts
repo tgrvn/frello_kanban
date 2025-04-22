@@ -8,7 +8,7 @@ export const loginSchema = z.object({
 export const registerSchema = z.object({
     email: z.string().email(),
     password: z.string(),
-    passwordConfirmation: z.string(),
+    passwordConfirm: z.string(),
     isAcceptedTerms: z.boolean()
 })
 
