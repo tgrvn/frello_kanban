@@ -127,6 +127,14 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ActivationTokensScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  token: 'token',
+  createdAt: 'createdAt',
+  exiresIn: 'exiresIn'
+};
+
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
   token: 'token',
@@ -158,6 +166,7 @@ exports.Prisma.QueryMode = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  ActivationTokens: 'ActivationTokens',
   Session: 'Session',
   Logs: 'Logs'
 };

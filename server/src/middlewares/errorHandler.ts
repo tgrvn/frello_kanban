@@ -3,6 +3,8 @@ import {ZodError} from "zod";
 import ErrorResponse from "@/response/ErrorResponse";
 
 const errorHandler = function (err: any, req: Request, res: Response, next: NextFunction) {
+    console.log(err);
+
     if (err instanceof ZodError) {
         const errorMessages = err.errors.map((issue) => ({
             message: issue.message,

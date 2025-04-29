@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model ActivationTokens
+ * 
+ */
+export type ActivationTokens = $Result.DefaultSelection<Prisma.$ActivationTokensPayload>
+/**
  * Model Session
  * 
  */
@@ -163,6 +168,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.activationTokens`: Exposes CRUD operations for the **ActivationTokens** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ActivationTokens
+    * const activationTokens = await prisma.activationTokens.findMany()
+    * ```
+    */
+  get activationTokens(): Prisma.ActivationTokensDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.session`: Exposes CRUD operations for the **Session** model.
@@ -624,6 +639,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    ActivationTokens: 'ActivationTokens',
     Session: 'Session',
     Logs: 'Logs'
   };
@@ -644,7 +660,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "logs"
+      modelProps: "user" | "activationTokens" | "session" | "logs"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -719,6 +735,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      ActivationTokens: {
+        payload: Prisma.$ActivationTokensPayload<ExtArgs>
+        fields: Prisma.ActivationTokensFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ActivationTokensFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ActivationTokensFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload>
+          }
+          findFirst: {
+            args: Prisma.ActivationTokensFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ActivationTokensFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload>
+          }
+          findMany: {
+            args: Prisma.ActivationTokensFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload>[]
+          }
+          create: {
+            args: Prisma.ActivationTokensCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload>
+          }
+          createMany: {
+            args: Prisma.ActivationTokensCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ActivationTokensCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload>[]
+          }
+          delete: {
+            args: Prisma.ActivationTokensDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload>
+          }
+          update: {
+            args: Prisma.ActivationTokensUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload>
+          }
+          deleteMany: {
+            args: Prisma.ActivationTokensDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ActivationTokensUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ActivationTokensUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload>[]
+          }
+          upsert: {
+            args: Prisma.ActivationTokensUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationTokensPayload>
+          }
+          aggregate: {
+            args: Prisma.ActivationTokensAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateActivationTokens>
+          }
+          groupBy: {
+            args: Prisma.ActivationTokensGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ActivationTokensGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ActivationTokensCountArgs<ExtArgs>
+            result: $Utils.Optional<ActivationTokensCountAggregateOutputType> | number
           }
         }
       }
@@ -959,6 +1049,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    activationTokens?: ActivationTokensOmit
     session?: SessionOmit
     logs?: LogsOmit
   }
@@ -1057,11 +1148,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     sessions: number
     logs: number
+    activationTokens: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     logs?: boolean | UserCountOutputTypeCountLogsArgs
+    activationTokens?: boolean | UserCountOutputTypeCountActivationTokensArgs
   }
 
   // Custom InputTypes
@@ -1087,6 +1180,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LogsWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountActivationTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivationTokensWhereInput
   }
 
 
@@ -1276,6 +1376,7 @@ export namespace Prisma {
     updatedAt?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     logs?: boolean | User$logsArgs<ExtArgs>
+    activationTokens?: boolean | User$activationTokensArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1313,6 +1414,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     logs?: boolean | User$logsArgs<ExtArgs>
+    activationTokens?: boolean | User$activationTokensArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1323,6 +1425,7 @@ export namespace Prisma {
     objects: {
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       logs: Prisma.$LogsPayload<ExtArgs>[]
+      activationTokens: Prisma.$ActivationTokensPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1728,6 +1831,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     logs<T extends User$logsArgs<ExtArgs> = {}>(args?: Subset<T, User$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    activationTokens<T extends User$activationTokensArgs<ExtArgs> = {}>(args?: Subset<T, User$activationTokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2200,6 +2304,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.activationTokens
+   */
+  export type User$activationTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
+    where?: ActivationTokensWhereInput
+    orderBy?: ActivationTokensOrderByWithRelationInput | ActivationTokensOrderByWithRelationInput[]
+    cursor?: ActivationTokensWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ActivationTokensScalarFieldEnum | ActivationTokensScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2215,6 +2343,1064 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ActivationTokens
+   */
+
+  export type AggregateActivationTokens = {
+    _count: ActivationTokensCountAggregateOutputType | null
+    _min: ActivationTokensMinAggregateOutputType | null
+    _max: ActivationTokensMaxAggregateOutputType | null
+  }
+
+  export type ActivationTokensMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    token: string | null
+    createdAt: Date | null
+    exiresIn: Date | null
+  }
+
+  export type ActivationTokensMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    token: string | null
+    createdAt: Date | null
+    exiresIn: Date | null
+  }
+
+  export type ActivationTokensCountAggregateOutputType = {
+    id: number
+    userId: number
+    token: number
+    createdAt: number
+    exiresIn: number
+    _all: number
+  }
+
+
+  export type ActivationTokensMinAggregateInputType = {
+    id?: true
+    userId?: true
+    token?: true
+    createdAt?: true
+    exiresIn?: true
+  }
+
+  export type ActivationTokensMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    token?: true
+    createdAt?: true
+    exiresIn?: true
+  }
+
+  export type ActivationTokensCountAggregateInputType = {
+    id?: true
+    userId?: true
+    token?: true
+    createdAt?: true
+    exiresIn?: true
+    _all?: true
+  }
+
+  export type ActivationTokensAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActivationTokens to aggregate.
+     */
+    where?: ActivationTokensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivationTokens to fetch.
+     */
+    orderBy?: ActivationTokensOrderByWithRelationInput | ActivationTokensOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ActivationTokensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivationTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivationTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ActivationTokens
+    **/
+    _count?: true | ActivationTokensCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ActivationTokensMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ActivationTokensMaxAggregateInputType
+  }
+
+  export type GetActivationTokensAggregateType<T extends ActivationTokensAggregateArgs> = {
+        [P in keyof T & keyof AggregateActivationTokens]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateActivationTokens[P]>
+      : GetScalarType<T[P], AggregateActivationTokens[P]>
+  }
+
+
+
+
+  export type ActivationTokensGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivationTokensWhereInput
+    orderBy?: ActivationTokensOrderByWithAggregationInput | ActivationTokensOrderByWithAggregationInput[]
+    by: ActivationTokensScalarFieldEnum[] | ActivationTokensScalarFieldEnum
+    having?: ActivationTokensScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ActivationTokensCountAggregateInputType | true
+    _min?: ActivationTokensMinAggregateInputType
+    _max?: ActivationTokensMaxAggregateInputType
+  }
+
+  export type ActivationTokensGroupByOutputType = {
+    id: string
+    userId: string
+    token: string
+    createdAt: Date
+    exiresIn: Date
+    _count: ActivationTokensCountAggregateOutputType | null
+    _min: ActivationTokensMinAggregateOutputType | null
+    _max: ActivationTokensMaxAggregateOutputType | null
+  }
+
+  type GetActivationTokensGroupByPayload<T extends ActivationTokensGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ActivationTokensGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ActivationTokensGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ActivationTokensGroupByOutputType[P]>
+            : GetScalarType<T[P], ActivationTokensGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ActivationTokensSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    token?: boolean
+    createdAt?: boolean
+    exiresIn?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activationTokens"]>
+
+  export type ActivationTokensSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    token?: boolean
+    createdAt?: boolean
+    exiresIn?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activationTokens"]>
+
+  export type ActivationTokensSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    token?: boolean
+    createdAt?: boolean
+    exiresIn?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activationTokens"]>
+
+  export type ActivationTokensSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    token?: boolean
+    createdAt?: boolean
+    exiresIn?: boolean
+  }
+
+  export type ActivationTokensOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "token" | "createdAt" | "exiresIn", ExtArgs["result"]["activationTokens"]>
+  export type ActivationTokensInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ActivationTokensIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ActivationTokensIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ActivationTokensPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ActivationTokens"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      token: string
+      createdAt: Date
+      exiresIn: Date
+    }, ExtArgs["result"]["activationTokens"]>
+    composites: {}
+  }
+
+  type ActivationTokensGetPayload<S extends boolean | null | undefined | ActivationTokensDefaultArgs> = $Result.GetResult<Prisma.$ActivationTokensPayload, S>
+
+  type ActivationTokensCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ActivationTokensFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ActivationTokensCountAggregateInputType | true
+    }
+
+  export interface ActivationTokensDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ActivationTokens'], meta: { name: 'ActivationTokens' } }
+    /**
+     * Find zero or one ActivationTokens that matches the filter.
+     * @param {ActivationTokensFindUniqueArgs} args - Arguments to find a ActivationTokens
+     * @example
+     * // Get one ActivationTokens
+     * const activationTokens = await prisma.activationTokens.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ActivationTokensFindUniqueArgs>(args: SelectSubset<T, ActivationTokensFindUniqueArgs<ExtArgs>>): Prisma__ActivationTokensClient<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ActivationTokens that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ActivationTokensFindUniqueOrThrowArgs} args - Arguments to find a ActivationTokens
+     * @example
+     * // Get one ActivationTokens
+     * const activationTokens = await prisma.activationTokens.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ActivationTokensFindUniqueOrThrowArgs>(args: SelectSubset<T, ActivationTokensFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ActivationTokensClient<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ActivationTokens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationTokensFindFirstArgs} args - Arguments to find a ActivationTokens
+     * @example
+     * // Get one ActivationTokens
+     * const activationTokens = await prisma.activationTokens.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ActivationTokensFindFirstArgs>(args?: SelectSubset<T, ActivationTokensFindFirstArgs<ExtArgs>>): Prisma__ActivationTokensClient<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ActivationTokens that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationTokensFindFirstOrThrowArgs} args - Arguments to find a ActivationTokens
+     * @example
+     * // Get one ActivationTokens
+     * const activationTokens = await prisma.activationTokens.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ActivationTokensFindFirstOrThrowArgs>(args?: SelectSubset<T, ActivationTokensFindFirstOrThrowArgs<ExtArgs>>): Prisma__ActivationTokensClient<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ActivationTokens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationTokensFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ActivationTokens
+     * const activationTokens = await prisma.activationTokens.findMany()
+     * 
+     * // Get first 10 ActivationTokens
+     * const activationTokens = await prisma.activationTokens.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const activationTokensWithIdOnly = await prisma.activationTokens.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ActivationTokensFindManyArgs>(args?: SelectSubset<T, ActivationTokensFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ActivationTokens.
+     * @param {ActivationTokensCreateArgs} args - Arguments to create a ActivationTokens.
+     * @example
+     * // Create one ActivationTokens
+     * const ActivationTokens = await prisma.activationTokens.create({
+     *   data: {
+     *     // ... data to create a ActivationTokens
+     *   }
+     * })
+     * 
+     */
+    create<T extends ActivationTokensCreateArgs>(args: SelectSubset<T, ActivationTokensCreateArgs<ExtArgs>>): Prisma__ActivationTokensClient<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ActivationTokens.
+     * @param {ActivationTokensCreateManyArgs} args - Arguments to create many ActivationTokens.
+     * @example
+     * // Create many ActivationTokens
+     * const activationTokens = await prisma.activationTokens.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ActivationTokensCreateManyArgs>(args?: SelectSubset<T, ActivationTokensCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ActivationTokens and returns the data saved in the database.
+     * @param {ActivationTokensCreateManyAndReturnArgs} args - Arguments to create many ActivationTokens.
+     * @example
+     * // Create many ActivationTokens
+     * const activationTokens = await prisma.activationTokens.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ActivationTokens and only return the `id`
+     * const activationTokensWithIdOnly = await prisma.activationTokens.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ActivationTokensCreateManyAndReturnArgs>(args?: SelectSubset<T, ActivationTokensCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ActivationTokens.
+     * @param {ActivationTokensDeleteArgs} args - Arguments to delete one ActivationTokens.
+     * @example
+     * // Delete one ActivationTokens
+     * const ActivationTokens = await prisma.activationTokens.delete({
+     *   where: {
+     *     // ... filter to delete one ActivationTokens
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ActivationTokensDeleteArgs>(args: SelectSubset<T, ActivationTokensDeleteArgs<ExtArgs>>): Prisma__ActivationTokensClient<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ActivationTokens.
+     * @param {ActivationTokensUpdateArgs} args - Arguments to update one ActivationTokens.
+     * @example
+     * // Update one ActivationTokens
+     * const activationTokens = await prisma.activationTokens.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ActivationTokensUpdateArgs>(args: SelectSubset<T, ActivationTokensUpdateArgs<ExtArgs>>): Prisma__ActivationTokensClient<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ActivationTokens.
+     * @param {ActivationTokensDeleteManyArgs} args - Arguments to filter ActivationTokens to delete.
+     * @example
+     * // Delete a few ActivationTokens
+     * const { count } = await prisma.activationTokens.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ActivationTokensDeleteManyArgs>(args?: SelectSubset<T, ActivationTokensDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ActivationTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationTokensUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ActivationTokens
+     * const activationTokens = await prisma.activationTokens.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ActivationTokensUpdateManyArgs>(args: SelectSubset<T, ActivationTokensUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ActivationTokens and returns the data updated in the database.
+     * @param {ActivationTokensUpdateManyAndReturnArgs} args - Arguments to update many ActivationTokens.
+     * @example
+     * // Update many ActivationTokens
+     * const activationTokens = await prisma.activationTokens.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ActivationTokens and only return the `id`
+     * const activationTokensWithIdOnly = await prisma.activationTokens.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ActivationTokensUpdateManyAndReturnArgs>(args: SelectSubset<T, ActivationTokensUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ActivationTokens.
+     * @param {ActivationTokensUpsertArgs} args - Arguments to update or create a ActivationTokens.
+     * @example
+     * // Update or create a ActivationTokens
+     * const activationTokens = await prisma.activationTokens.upsert({
+     *   create: {
+     *     // ... data to create a ActivationTokens
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ActivationTokens we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ActivationTokensUpsertArgs>(args: SelectSubset<T, ActivationTokensUpsertArgs<ExtArgs>>): Prisma__ActivationTokensClient<$Result.GetResult<Prisma.$ActivationTokensPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ActivationTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationTokensCountArgs} args - Arguments to filter ActivationTokens to count.
+     * @example
+     * // Count the number of ActivationTokens
+     * const count = await prisma.activationTokens.count({
+     *   where: {
+     *     // ... the filter for the ActivationTokens we want to count
+     *   }
+     * })
+    **/
+    count<T extends ActivationTokensCountArgs>(
+      args?: Subset<T, ActivationTokensCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ActivationTokensCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ActivationTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationTokensAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ActivationTokensAggregateArgs>(args: Subset<T, ActivationTokensAggregateArgs>): Prisma.PrismaPromise<GetActivationTokensAggregateType<T>>
+
+    /**
+     * Group by ActivationTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationTokensGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ActivationTokensGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ActivationTokensGroupByArgs['orderBy'] }
+        : { orderBy?: ActivationTokensGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ActivationTokensGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetActivationTokensGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ActivationTokens model
+   */
+  readonly fields: ActivationTokensFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ActivationTokens.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ActivationTokensClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ActivationTokens model
+   */
+  interface ActivationTokensFieldRefs {
+    readonly id: FieldRef<"ActivationTokens", 'String'>
+    readonly userId: FieldRef<"ActivationTokens", 'String'>
+    readonly token: FieldRef<"ActivationTokens", 'String'>
+    readonly createdAt: FieldRef<"ActivationTokens", 'DateTime'>
+    readonly exiresIn: FieldRef<"ActivationTokens", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ActivationTokens findUnique
+   */
+  export type ActivationTokensFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivationTokens to fetch.
+     */
+    where: ActivationTokensWhereUniqueInput
+  }
+
+  /**
+   * ActivationTokens findUniqueOrThrow
+   */
+  export type ActivationTokensFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivationTokens to fetch.
+     */
+    where: ActivationTokensWhereUniqueInput
+  }
+
+  /**
+   * ActivationTokens findFirst
+   */
+  export type ActivationTokensFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivationTokens to fetch.
+     */
+    where?: ActivationTokensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivationTokens to fetch.
+     */
+    orderBy?: ActivationTokensOrderByWithRelationInput | ActivationTokensOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActivationTokens.
+     */
+    cursor?: ActivationTokensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivationTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivationTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActivationTokens.
+     */
+    distinct?: ActivationTokensScalarFieldEnum | ActivationTokensScalarFieldEnum[]
+  }
+
+  /**
+   * ActivationTokens findFirstOrThrow
+   */
+  export type ActivationTokensFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivationTokens to fetch.
+     */
+    where?: ActivationTokensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivationTokens to fetch.
+     */
+    orderBy?: ActivationTokensOrderByWithRelationInput | ActivationTokensOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActivationTokens.
+     */
+    cursor?: ActivationTokensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivationTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivationTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActivationTokens.
+     */
+    distinct?: ActivationTokensScalarFieldEnum | ActivationTokensScalarFieldEnum[]
+  }
+
+  /**
+   * ActivationTokens findMany
+   */
+  export type ActivationTokensFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivationTokens to fetch.
+     */
+    where?: ActivationTokensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivationTokens to fetch.
+     */
+    orderBy?: ActivationTokensOrderByWithRelationInput | ActivationTokensOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ActivationTokens.
+     */
+    cursor?: ActivationTokensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivationTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivationTokens.
+     */
+    skip?: number
+    distinct?: ActivationTokensScalarFieldEnum | ActivationTokensScalarFieldEnum[]
+  }
+
+  /**
+   * ActivationTokens create
+   */
+  export type ActivationTokensCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ActivationTokens.
+     */
+    data: XOR<ActivationTokensCreateInput, ActivationTokensUncheckedCreateInput>
+  }
+
+  /**
+   * ActivationTokens createMany
+   */
+  export type ActivationTokensCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ActivationTokens.
+     */
+    data: ActivationTokensCreateManyInput | ActivationTokensCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ActivationTokens createManyAndReturn
+   */
+  export type ActivationTokensCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * The data used to create many ActivationTokens.
+     */
+    data: ActivationTokensCreateManyInput | ActivationTokensCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ActivationTokens update
+   */
+  export type ActivationTokensUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ActivationTokens.
+     */
+    data: XOR<ActivationTokensUpdateInput, ActivationTokensUncheckedUpdateInput>
+    /**
+     * Choose, which ActivationTokens to update.
+     */
+    where: ActivationTokensWhereUniqueInput
+  }
+
+  /**
+   * ActivationTokens updateMany
+   */
+  export type ActivationTokensUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ActivationTokens.
+     */
+    data: XOR<ActivationTokensUpdateManyMutationInput, ActivationTokensUncheckedUpdateManyInput>
+    /**
+     * Filter which ActivationTokens to update
+     */
+    where?: ActivationTokensWhereInput
+    /**
+     * Limit how many ActivationTokens to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ActivationTokens updateManyAndReturn
+   */
+  export type ActivationTokensUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * The data used to update ActivationTokens.
+     */
+    data: XOR<ActivationTokensUpdateManyMutationInput, ActivationTokensUncheckedUpdateManyInput>
+    /**
+     * Filter which ActivationTokens to update
+     */
+    where?: ActivationTokensWhereInput
+    /**
+     * Limit how many ActivationTokens to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ActivationTokens upsert
+   */
+  export type ActivationTokensUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ActivationTokens to update in case it exists.
+     */
+    where: ActivationTokensWhereUniqueInput
+    /**
+     * In case the ActivationTokens found by the `where` argument doesn't exist, create a new ActivationTokens with this data.
+     */
+    create: XOR<ActivationTokensCreateInput, ActivationTokensUncheckedCreateInput>
+    /**
+     * In case the ActivationTokens was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ActivationTokensUpdateInput, ActivationTokensUncheckedUpdateInput>
+  }
+
+  /**
+   * ActivationTokens delete
+   */
+  export type ActivationTokensDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
+    /**
+     * Filter which ActivationTokens to delete.
+     */
+    where: ActivationTokensWhereUniqueInput
+  }
+
+  /**
+   * ActivationTokens deleteMany
+   */
+  export type ActivationTokensDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActivationTokens to delete
+     */
+    where?: ActivationTokensWhereInput
+    /**
+     * Limit how many ActivationTokens to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ActivationTokens without action
+   */
+  export type ActivationTokensDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationTokens
+     */
+    select?: ActivationTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationTokens
+     */
+    omit?: ActivationTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationTokensInclude<ExtArgs> | null
   }
 
 
@@ -4387,6 +5573,17 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const ActivationTokensScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    token: 'token',
+    createdAt: 'createdAt',
+    exiresIn: 'exiresIn'
+  };
+
+  export type ActivationTokensScalarFieldEnum = (typeof ActivationTokensScalarFieldEnum)[keyof typeof ActivationTokensScalarFieldEnum]
+
+
   export const SessionScalarFieldEnum: {
     id: 'id',
     token: 'token',
@@ -4497,6 +5694,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
     logs?: LogsListRelationFilter
+    activationTokens?: ActivationTokensListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4509,6 +5707,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     sessions?: SessionOrderByRelationAggregateInput
     logs?: LogsOrderByRelationAggregateInput
+    activationTokens?: ActivationTokensOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4524,6 +5723,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
     logs?: LogsListRelationFilter
+    activationTokens?: ActivationTokensListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4550,6 +5750,61 @@ export namespace Prisma {
     isAcceptedTerms?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type ActivationTokensWhereInput = {
+    AND?: ActivationTokensWhereInput | ActivationTokensWhereInput[]
+    OR?: ActivationTokensWhereInput[]
+    NOT?: ActivationTokensWhereInput | ActivationTokensWhereInput[]
+    id?: StringFilter<"ActivationTokens"> | string
+    userId?: StringFilter<"ActivationTokens"> | string
+    token?: StringFilter<"ActivationTokens"> | string
+    createdAt?: DateTimeFilter<"ActivationTokens"> | Date | string
+    exiresIn?: DateTimeFilter<"ActivationTokens"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ActivationTokensOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    token?: SortOrder
+    createdAt?: SortOrder
+    exiresIn?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ActivationTokensWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ActivationTokensWhereInput | ActivationTokensWhereInput[]
+    OR?: ActivationTokensWhereInput[]
+    NOT?: ActivationTokensWhereInput | ActivationTokensWhereInput[]
+    userId?: StringFilter<"ActivationTokens"> | string
+    token?: StringFilter<"ActivationTokens"> | string
+    createdAt?: DateTimeFilter<"ActivationTokens"> | Date | string
+    exiresIn?: DateTimeFilter<"ActivationTokens"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ActivationTokensOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    token?: SortOrder
+    createdAt?: SortOrder
+    exiresIn?: SortOrder
+    _count?: ActivationTokensCountOrderByAggregateInput
+    _max?: ActivationTokensMaxOrderByAggregateInput
+    _min?: ActivationTokensMinOrderByAggregateInput
+  }
+
+  export type ActivationTokensScalarWhereWithAggregatesInput = {
+    AND?: ActivationTokensScalarWhereWithAggregatesInput | ActivationTokensScalarWhereWithAggregatesInput[]
+    OR?: ActivationTokensScalarWhereWithAggregatesInput[]
+    NOT?: ActivationTokensScalarWhereWithAggregatesInput | ActivationTokensScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ActivationTokens"> | string
+    userId?: StringWithAggregatesFilter<"ActivationTokens"> | string
+    token?: StringWithAggregatesFilter<"ActivationTokens"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ActivationTokens"> | Date | string
+    exiresIn?: DateTimeWithAggregatesFilter<"ActivationTokens"> | Date | string
   }
 
   export type SessionWhereInput = {
@@ -4682,6 +5937,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     logs?: LogsCreateNestedManyWithoutUserInput
+    activationTokens?: ActivationTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4694,6 +5950,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     logs?: LogsUncheckedCreateNestedManyWithoutUserInput
+    activationTokens?: ActivationTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -4706,6 +5963,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     logs?: LogsUpdateManyWithoutUserNestedInput
+    activationTokens?: ActivationTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4718,6 +5976,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogsUncheckedUpdateManyWithoutUserNestedInput
+    activationTokens?: ActivationTokensUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -4748,6 +6007,61 @@ export namespace Prisma {
     isAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationTokensCreateInput = {
+    id?: string
+    token: string
+    createdAt?: Date | string
+    exiresIn?: Date | string
+    user: UserCreateNestedOneWithoutActivationTokensInput
+  }
+
+  export type ActivationTokensUncheckedCreateInput = {
+    id?: string
+    userId: string
+    token: string
+    createdAt?: Date | string
+    exiresIn?: Date | string
+  }
+
+  export type ActivationTokensUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    exiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutActivationTokensNestedInput
+  }
+
+  export type ActivationTokensUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    exiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationTokensCreateManyInput = {
+    id?: string
+    userId: string
+    token: string
+    createdAt?: Date | string
+    exiresIn?: Date | string
+  }
+
+  export type ActivationTokensUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    exiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationTokensUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    exiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SessionCreateInput = {
@@ -4917,11 +6231,21 @@ export namespace Prisma {
     none?: LogsWhereInput
   }
 
+  export type ActivationTokensListRelationFilter = {
+    every?: ActivationTokensWhereInput
+    some?: ActivationTokensWhereInput
+    none?: ActivationTokensWhereInput
+  }
+
   export type SessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type LogsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ActivationTokensOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5000,6 +6324,30 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
+  export type ActivationTokensCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    token?: SortOrder
+    createdAt?: SortOrder
+    exiresIn?: SortOrder
+  }
+
+  export type ActivationTokensMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    token?: SortOrder
+    createdAt?: SortOrder
+    exiresIn?: SortOrder
+  }
+
+  export type ActivationTokensMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    token?: SortOrder
+    createdAt?: SortOrder
+    exiresIn?: SortOrder
+  }
+
   export type SessionCountOrderByAggregateInput = {
     id?: SortOrder
     token?: SortOrder
@@ -5068,6 +6416,13 @@ export namespace Prisma {
     connect?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
   }
 
+  export type ActivationTokensCreateNestedManyWithoutUserInput = {
+    create?: XOR<ActivationTokensCreateWithoutUserInput, ActivationTokensUncheckedCreateWithoutUserInput> | ActivationTokensCreateWithoutUserInput[] | ActivationTokensUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivationTokensCreateOrConnectWithoutUserInput | ActivationTokensCreateOrConnectWithoutUserInput[]
+    createMany?: ActivationTokensCreateManyUserInputEnvelope
+    connect?: ActivationTokensWhereUniqueInput | ActivationTokensWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -5080,6 +6435,13 @@ export namespace Prisma {
     connectOrCreate?: LogsCreateOrConnectWithoutUserInput | LogsCreateOrConnectWithoutUserInput[]
     createMany?: LogsCreateManyUserInputEnvelope
     connect?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
+  }
+
+  export type ActivationTokensUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ActivationTokensCreateWithoutUserInput, ActivationTokensUncheckedCreateWithoutUserInput> | ActivationTokensCreateWithoutUserInput[] | ActivationTokensUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivationTokensCreateOrConnectWithoutUserInput | ActivationTokensCreateOrConnectWithoutUserInput[]
+    createMany?: ActivationTokensCreateManyUserInputEnvelope
+    connect?: ActivationTokensWhereUniqueInput | ActivationTokensWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5122,6 +6484,20 @@ export namespace Prisma {
     deleteMany?: LogsScalarWhereInput | LogsScalarWhereInput[]
   }
 
+  export type ActivationTokensUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ActivationTokensCreateWithoutUserInput, ActivationTokensUncheckedCreateWithoutUserInput> | ActivationTokensCreateWithoutUserInput[] | ActivationTokensUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivationTokensCreateOrConnectWithoutUserInput | ActivationTokensCreateOrConnectWithoutUserInput[]
+    upsert?: ActivationTokensUpsertWithWhereUniqueWithoutUserInput | ActivationTokensUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ActivationTokensCreateManyUserInputEnvelope
+    set?: ActivationTokensWhereUniqueInput | ActivationTokensWhereUniqueInput[]
+    disconnect?: ActivationTokensWhereUniqueInput | ActivationTokensWhereUniqueInput[]
+    delete?: ActivationTokensWhereUniqueInput | ActivationTokensWhereUniqueInput[]
+    connect?: ActivationTokensWhereUniqueInput | ActivationTokensWhereUniqueInput[]
+    update?: ActivationTokensUpdateWithWhereUniqueWithoutUserInput | ActivationTokensUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ActivationTokensUpdateManyWithWhereWithoutUserInput | ActivationTokensUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ActivationTokensScalarWhereInput | ActivationTokensScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -5148,6 +6524,34 @@ export namespace Prisma {
     update?: LogsUpdateWithWhereUniqueWithoutUserInput | LogsUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: LogsUpdateManyWithWhereWithoutUserInput | LogsUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: LogsScalarWhereInput | LogsScalarWhereInput[]
+  }
+
+  export type ActivationTokensUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ActivationTokensCreateWithoutUserInput, ActivationTokensUncheckedCreateWithoutUserInput> | ActivationTokensCreateWithoutUserInput[] | ActivationTokensUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivationTokensCreateOrConnectWithoutUserInput | ActivationTokensCreateOrConnectWithoutUserInput[]
+    upsert?: ActivationTokensUpsertWithWhereUniqueWithoutUserInput | ActivationTokensUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ActivationTokensCreateManyUserInputEnvelope
+    set?: ActivationTokensWhereUniqueInput | ActivationTokensWhereUniqueInput[]
+    disconnect?: ActivationTokensWhereUniqueInput | ActivationTokensWhereUniqueInput[]
+    delete?: ActivationTokensWhereUniqueInput | ActivationTokensWhereUniqueInput[]
+    connect?: ActivationTokensWhereUniqueInput | ActivationTokensWhereUniqueInput[]
+    update?: ActivationTokensUpdateWithWhereUniqueWithoutUserInput | ActivationTokensUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ActivationTokensUpdateManyWithWhereWithoutUserInput | ActivationTokensUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ActivationTokensScalarWhereInput | ActivationTokensScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutActivationTokensInput = {
+    create?: XOR<UserCreateWithoutActivationTokensInput, UserUncheckedCreateWithoutActivationTokensInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivationTokensInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutActivationTokensNestedInput = {
+    create?: XOR<UserCreateWithoutActivationTokensInput, UserUncheckedCreateWithoutActivationTokensInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivationTokensInput
+    upsert?: UserUpsertWithoutActivationTokensInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActivationTokensInput, UserUpdateWithoutActivationTokensInput>, UserUncheckedUpdateWithoutActivationTokensInput>
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -5310,6 +6714,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ActivationTokensCreateWithoutUserInput = {
+    id?: string
+    token: string
+    createdAt?: Date | string
+    exiresIn?: Date | string
+  }
+
+  export type ActivationTokensUncheckedCreateWithoutUserInput = {
+    id?: string
+    token: string
+    createdAt?: Date | string
+    exiresIn?: Date | string
+  }
+
+  export type ActivationTokensCreateOrConnectWithoutUserInput = {
+    where: ActivationTokensWhereUniqueInput
+    create: XOR<ActivationTokensCreateWithoutUserInput, ActivationTokensUncheckedCreateWithoutUserInput>
+  }
+
+  export type ActivationTokensCreateManyUserInputEnvelope = {
+    data: ActivationTokensCreateManyUserInput | ActivationTokensCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
     where: SessionWhereUniqueInput
     update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
@@ -5366,6 +6794,97 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Logs"> | Date | string
   }
 
+  export type ActivationTokensUpsertWithWhereUniqueWithoutUserInput = {
+    where: ActivationTokensWhereUniqueInput
+    update: XOR<ActivationTokensUpdateWithoutUserInput, ActivationTokensUncheckedUpdateWithoutUserInput>
+    create: XOR<ActivationTokensCreateWithoutUserInput, ActivationTokensUncheckedCreateWithoutUserInput>
+  }
+
+  export type ActivationTokensUpdateWithWhereUniqueWithoutUserInput = {
+    where: ActivationTokensWhereUniqueInput
+    data: XOR<ActivationTokensUpdateWithoutUserInput, ActivationTokensUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ActivationTokensUpdateManyWithWhereWithoutUserInput = {
+    where: ActivationTokensScalarWhereInput
+    data: XOR<ActivationTokensUpdateManyMutationInput, ActivationTokensUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ActivationTokensScalarWhereInput = {
+    AND?: ActivationTokensScalarWhereInput | ActivationTokensScalarWhereInput[]
+    OR?: ActivationTokensScalarWhereInput[]
+    NOT?: ActivationTokensScalarWhereInput | ActivationTokensScalarWhereInput[]
+    id?: StringFilter<"ActivationTokens"> | string
+    userId?: StringFilter<"ActivationTokens"> | string
+    token?: StringFilter<"ActivationTokens"> | string
+    createdAt?: DateTimeFilter<"ActivationTokens"> | Date | string
+    exiresIn?: DateTimeFilter<"ActivationTokens"> | Date | string
+  }
+
+  export type UserCreateWithoutActivationTokensInput = {
+    id?: string
+    email: string
+    password: string
+    isActivated?: boolean
+    isAcceptedTerms: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    logs?: LogsCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutActivationTokensInput = {
+    id?: string
+    email: string
+    password: string
+    isActivated?: boolean
+    isAcceptedTerms: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogsUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutActivationTokensInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutActivationTokensInput, UserUncheckedCreateWithoutActivationTokensInput>
+  }
+
+  export type UserUpsertWithoutActivationTokensInput = {
+    update: XOR<UserUpdateWithoutActivationTokensInput, UserUncheckedUpdateWithoutActivationTokensInput>
+    create: XOR<UserCreateWithoutActivationTokensInput, UserUncheckedCreateWithoutActivationTokensInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutActivationTokensInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutActivationTokensInput, UserUncheckedUpdateWithoutActivationTokensInput>
+  }
+
+  export type UserUpdateWithoutActivationTokensInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isActivated?: BoolFieldUpdateOperationsInput | boolean
+    isAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    logs?: LogsUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutActivationTokensInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isActivated?: BoolFieldUpdateOperationsInput | boolean
+    isAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogsUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutSessionsInput = {
     id?: string
     email: string
@@ -5375,6 +6894,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     logs?: LogsCreateNestedManyWithoutUserInput
+    activationTokens?: ActivationTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -5386,6 +6906,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     logs?: LogsUncheckedCreateNestedManyWithoutUserInput
+    activationTokens?: ActivationTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -5413,6 +6934,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     logs?: LogsUpdateManyWithoutUserNestedInput
+    activationTokens?: ActivationTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -5424,6 +6946,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     logs?: LogsUncheckedUpdateManyWithoutUserNestedInput
+    activationTokens?: ActivationTokensUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutLogsInput = {
@@ -5435,6 +6958,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
+    activationTokens?: ActivationTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLogsInput = {
@@ -5446,6 +6970,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    activationTokens?: ActivationTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLogsInput = {
@@ -5473,6 +6998,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    activationTokens?: ActivationTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLogsInput = {
@@ -5484,6 +7010,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    activationTokens?: ActivationTokensUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -5500,6 +7027,13 @@ export namespace Prisma {
     id?: string
     messsage: string
     createdAt?: Date | string
+  }
+
+  export type ActivationTokensCreateManyUserInput = {
+    id?: string
+    token: string
+    createdAt?: Date | string
+    exiresIn?: Date | string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -5548,6 +7082,27 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     messsage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationTokensUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    exiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationTokensUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    exiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationTokensUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    exiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
