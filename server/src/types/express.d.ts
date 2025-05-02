@@ -7,7 +7,7 @@ declare global {
         }
 
         interface Response {
-            success: (message: string, data: any) => Response;
+            success: (message: string, data?: any) => Response;
         }
     }
 }

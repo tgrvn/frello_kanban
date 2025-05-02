@@ -18,11 +18,10 @@ class AuthController {
             const userData = await loginUser({ip, userAgent, deviceId, fingerprint, ...req.body});
             res.cookie(COOKIE_CONFIG.name, userData.refreshToken, COOKIE_CONFIG.options);
 
-            res.status(200)
-                .json(SuccessResponse.success("welcome", {
-                    user: userData.user,
-                    accessToken: userData.accessToken
-                }));
+            res.success("welcome", {
+                user: userData.user,
+                accessToken: userData.accessToken
+            });
         } catch (err) {
             res.clearCookie(COOKIE_CONFIG.name);
             next(err);
@@ -58,11 +57,10 @@ class AuthController {
 
             res.cookie(COOKIE_CONFIG.name, sessionData.refreshToken, COOKIE_CONFIG.options);
 
-            res.status(200)
-                .json(SuccessResponse.success("welcome back", {
-                    user: sessionData.user,
-                    accessToken: sessionData.accessToken
-                }));
+            res.success("welcome back", {
+                user: sessionData.user,
+                accessToken: sessionData.accessToken
+            });
         } catch (err) {
             res.clearCookie(COOKIE_CONFIG.name);
             next(err);
@@ -75,7 +73,7 @@ class AuthController {
             await SessionRepository.deleteByToken(token);
             res.clearCookie(COOKIE_CONFIG.name);
 
-            res.json(SuccessResponse.success("success logout"));
+            res.success("success logout");
         } catch (err) {
             res.clearCookie(COOKIE_CONFIG.name);
             next(err);
@@ -87,7 +85,7 @@ class AuthController {
             const token = req.params.token;
             await activateUser(token);
 
-            res.json(SuccessResponse.success("user activated"))
+            res.success("user activated");
         } catch (err) {
             res.clearCookie(COOKIE_CONFIG.name);
             next(err);
