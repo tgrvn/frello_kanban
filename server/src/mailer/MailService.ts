@@ -1,5 +1,5 @@
 import nodemailer, {SendMailOptions, Transporter} from "nodemailer";
-import {MAIL_HOST, MAIL_PORT} from "@/utils/constants";
+import {MAIL_HOST, MAIL_PORT} from "@/shared/utils/constants";
 import hbs from "nodemailer-express-handlebars";
 import path from "path";
 

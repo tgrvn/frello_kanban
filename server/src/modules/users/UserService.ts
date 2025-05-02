@@ -1,31 +1,37 @@
 import UserRepository from "@/modules/users/UserRepository";
 import bcrypt from 'bcrypt';
-import {User} from "@/prisma/client";
-import {CreateUserDTO, UserDTO} from "@/prisma/types";
-import ErrorResponse from "@/response/ErrorResponse";
-
+import {Prisma, User} from "@/prisma/client";
+import {UserDTO} from "@/prisma/types";
+import HttpError from "@/response/HttpError";
+import UserCreateInput = Prisma.UserCreateInput;
 
 class UserService {
-    async create({email, password}: CreateUserDTO): Promise<UserDTO> {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await UserRepository
-            .create({email, password: hashedPassword});
+    async validateOrThrow(email: string, password?: string): Promise<UserDTO> {
+        const user = await UserRepository.findUnique({email});
+        if (!user) throw HttpError.unauthenticated("invalid credentials");
+
+        if (password) {
+            const isPasswordValid = bcrypt.compare(user.password, password);
+            if (!isPasswordValid) throw HttpError.unauthenticated("invalid credentials");
+        }
 
         return this.makeUserDto(user);
     }
 
-    async findAndValidatePassword({email, password}: CreateUserDTO): Promise<UserDTO> {
-        const user = await UserRepository.find({email});
-        if (!user) throw ErrorResponse.badRequest("пользователь не найден или неверный пароль");
+    async activate(id: string): Promise<UserDTO> {
+        const user = await UserRepository.edit(id, {isActivated: true});
+        return this.makeUserDto(user);
+    }
 
-        const isPasswordValid = bcrypt.compare(user.password, password);
-        if (!isPasswordValid) throw ErrorResponse.badRequest("пользователь не найден или неверный пароль");
+    async create({email, password}: UserCreateInput): Promise<UserDTO> {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await UserRepository.create({email, password: hashedPassword});
 
         return this.makeUserDto(user);
     }
 
     makeUserDto(user: User | null): UserDTO {
-        if (!user) throw ErrorResponse.iternalServerError();
+        if (!user) throw HttpError.iternalServerError();
 
         const {password, ...dto} = user;
         return dto;

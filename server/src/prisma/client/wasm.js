@@ -99,21 +99,31 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.ActivationTokensScalarFieldEnum = {
+exports.Prisma.UserDeviceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  deviceId: 'deviceId',
+  fingerprint: 'fingerprint',
+  ip: 'ip',
+  userAgent: 'userAgent',
+  isTrusted: 'isTrusted',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ActivationTokenScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   token: 'token',
   createdAt: 'createdAt',
-  exiresIn: 'exiresIn'
+  expiresIn: 'expiresIn'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
   token: 'token',
   userId: 'userId',
-  fingerprint: 'fingerprint',
-  ua: 'ua',
-  ip: 'ip',
+  userDeviceId: 'userDeviceId',
+  lastActivity: 'lastActivity',
   expiresIn: 'expiresIn',
   createdAt: 'createdAt'
 };
@@ -135,10 +145,16 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
   User: 'User',
-  ActivationTokens: 'ActivationTokens',
+  UserDevice: 'UserDevice',
+  ActivationToken: 'ActivationToken',
   Session: 'Session',
   Logs: 'Logs'
 };
@@ -191,13 +207,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "datasource db {\n  url      = env(\"DATABASE_URL\")\n  provider = \"postgresql\"\n}\n\ngenerator client {\n  provider        = \"prisma-client-js\"\n  previewFeatures = [\"driverAdapters\"]\n  output          = \"./client\"\n}\n\nmodel User {\n  id               String             @unique @default(uuid())\n  email            String             @unique\n  password         String\n  isActivated      Boolean            @default(false) @map(\"is_activated\")\n  isAcceptedTerms  Boolean            @map(\"is_accepted_terms\")\n  createdAt        DateTime           @default(now()) @map(\"created_at\")\n  updatedAt        DateTime           @default(now()) @map(\"updated_at\")\n  sessions         Session[]\n  logs             Logs[]\n  activationTokens ActivationTokens[]\n\n  @@map(\"users\")\n}\n\nmodel ActivationTokens {\n  id        String   @unique @default(uuid())\n  userId    String   @map(\"user_id\")\n  token     String\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  exiresIn  DateTime @default(now()) @map(\"exiresIn\")\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)\n\n  @@map(\"activation_tokens\")\n}\n\nmodel Session {\n  id          String   @unique @default(uuid())\n  token       String   @unique\n  userId      String   @map(\"user_id\")\n  fingerprint String\n  ua          String\n  ip          String\n  expiresIn   DateTime @default(now()) @map(\"expires_in\")\n  createdAt   DateTime @default(now()) @map(\"created_at\")\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)\n\n  @@map(\"sessions\")\n}\n\nmodel Logs {\n  id       String @unique @default(uuid())\n  messsage String\n  userId   String @map(\"user_id\")\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n\n  @@map(\"logs\")\n}\n",
-  "inlineSchemaHash": "714340ffa23c55499d4b194ee4888a84133915ebb1be757f910fb89d129f6036",
+  "inlineSchema": "datasource db {\n  url      = env(\"DATABASE_URL\")\n  provider = \"postgresql\"\n}\n\ngenerator client {\n  provider        = \"prisma-client-js\"\n  previewFeatures = [\"driverAdapters\"]\n  output          = \"./client\"\n}\n\nmodel User {\n  id               String            @id @unique @default(uuid())\n  email            String            @unique\n  password         String\n  isActivated      Boolean           @default(false) @map(\"is_activated\")\n  isAcceptedTerms  Boolean           @default(false) @map(\"is_accepted_terms\")\n  createdAt        DateTime          @default(now()) @map(\"created_at\")\n  updatedAt        DateTime          @default(now()) @map(\"updated_at\")\n  sessions         Session[]\n  logs             Logs[]\n  activationTokens ActivationToken[]\n  userDevices      UserDevice[]\n\n  @@map(\"users\")\n}\n\nmodel UserDevice {\n  id          String    @id @unique @default(uuid())\n  userId      String    @map(\"user_id\")\n  deviceId    String    @default(uuid())\n  fingerprint String\n  ip          String\n  userAgent   String\n  isTrusted   Boolean   @default(false)\n  createdAt   DateTime  @default(now())\n  sessions    Session[]\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)\n\n  @@unique([userId, deviceId], name: \"user_device_pair\")\n  @@map(\"user_devices\")\n}\n\nmodel ActivationToken {\n  id        String   @unique @default(uuid())\n  userId    String   @map(\"user_id\")\n  token     String   @unique\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  expiresIn DateTime @default(now()) @map(\"expires_in\")\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)\n\n  @@map(\"activation_tokens\")\n}\n\nmodel Session {\n  id           String   @id @unique @default(uuid())\n  token        String   @unique\n  userId       String   @map(\"user_id\")\n  userDeviceId String   @map(\"user_device_id\")\n  lastActivity DateTime @default(now()) @map(\"last_activity\")\n  expiresIn    DateTime @default(now()) @map(\"expires_in\")\n  createdAt    DateTime @default(now()) @map(\"created_at\")\n\n  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)\n  userDevice UserDevice @relation(fields: [userDeviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)\n\n  @@map(\"sessions\")\n}\n\nmodel Logs {\n  id        String    @id @unique @default(uuid())\n  messsage  String\n  userId    String    @map(\"user_id\")\n  createdAt DateTime? @default(now()) @map(\"created_at\")\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)\n\n  @@map(\"logs\")\n}\n",
+  "inlineSchemaHash": "ff42e4f73ba2ebdd0700cf4157d72ffde25f330ad25235522e2106224694dcd2",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isActivated\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_activated\"},{\"name\":\"isAcceptedTerms\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_accepted_terms\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"logs\",\"kind\":\"object\",\"type\":\"Logs\",\"relationName\":\"LogsToUser\"},{\"name\":\"activationTokens\",\"kind\":\"object\",\"type\":\"ActivationTokens\",\"relationName\":\"ActivationTokensToUser\"}],\"dbName\":\"users\"},\"ActivationTokens\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"exiresIn\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"exiresIn\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ActivationTokensToUser\"}],\"dbName\":\"activation_tokens\"},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"fingerprint\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ua\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ip\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresIn\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"expires_in\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"}],\"dbName\":\"sessions\"},\"Logs\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"messsage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"LogsToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"}],\"dbName\":\"logs\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isActivated\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_activated\"},{\"name\":\"isAcceptedTerms\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_accepted_terms\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"logs\",\"kind\":\"object\",\"type\":\"Logs\",\"relationName\":\"LogsToUser\"},{\"name\":\"activationTokens\",\"kind\":\"object\",\"type\":\"ActivationToken\",\"relationName\":\"ActivationTokenToUser\"},{\"name\":\"userDevices\",\"kind\":\"object\",\"type\":\"UserDevice\",\"relationName\":\"UserToUserDevice\"}],\"dbName\":\"users\"},\"UserDevice\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"deviceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fingerprint\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ip\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userAgent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isTrusted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUserDevice\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserDevice\"}],\"dbName\":\"user_devices\"},\"ActivationToken\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"expiresIn\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"expires_in\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ActivationTokenToUser\"}],\"dbName\":\"activation_tokens\"},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"userDeviceId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_device_id\"},{\"name\":\"lastActivity\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"last_activity\"},{\"name\":\"expiresIn\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"expires_in\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"},{\"name\":\"userDevice\",\"kind\":\"object\",\"type\":\"UserDevice\",\"relationName\":\"SessionToUserDevice\"}],\"dbName\":\"sessions\"},\"Logs\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"messsage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"LogsToUser\"}],\"dbName\":\"logs\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

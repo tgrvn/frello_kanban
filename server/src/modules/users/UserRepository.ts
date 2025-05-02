@@ -1,16 +1,22 @@
 import prisma from "@/prisma/prisma";
-import {User} from "@/prisma/client";
-import {CreateUserDTO} from "@/prisma/types";
+import {Prisma, User} from "@/prisma/client";
+import UserUpdateInput = Prisma.UserUpdateInput;
+import UserCreateInput = Prisma.UserCreateInput;
+import UserWhereUniqueInput = Prisma.UserWhereUniqueInput;
 
 class UserRepository {
-    async create({email, password}: CreateUserDTO): Promise<User> {
+    async create({email, password}: UserCreateInput): Promise<User> {
         return prisma.user.create({
             data: {email, password, isAcceptedTerms: true},
         });
     }
 
-    async find(params: { email: string } | { id: string }): Promise<User | null> {
-        return prisma.user.findUnique({where: {...params}});
+    async edit(id: string, data: UserUpdateInput): Promise<User> {
+        return prisma.user.update({where: {id}, data});
+    }
+
+    async findUnique(params: UserWhereUniqueInput): Promise<User | null> {
+        return prisma.user.findUnique({where: params});
     }
 
     async isEmailExists(email: string): Promise<boolean> {

@@ -21,6 +21,7 @@ export const registrationSchema = z.object({
 export type LoginData = z.infer<typeof loginSchema>
 export interface IAuthData extends LoginData {
     ip: string;
-    ua: string;
+    userAgent: string;
+    deviceId: string;
     fingerprint: string;
 }

@@ -1,6 +1,6 @@
 import {NextFunction, Response, Request, Router} from "express";
 import authRouter from "@/modules/auth/authRoutes";
-import ErrorResponse from "@/response/ErrorResponse";
+import HttpError from "@/response/HttpError";
 import authentication from "@/middlewares/authentication";
 
 const router = Router();
@@ -12,7 +12,7 @@ router.get('/boards', [authentication], (req: Request, res: Response, next: Next
 })
 
 router.use((req: Request, res: Response, next: NextFunction) => {
-    throw ErrorResponse.notFound();
+    next(HttpError.notFound());
 });
 
 export default router;

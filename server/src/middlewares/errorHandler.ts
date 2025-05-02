@@ -1,31 +1,28 @@
 import {NextFunction, Request, Response} from "express";
 import {ZodError} from "zod";
-import ErrorResponse from "@/response/ErrorResponse";
+import HttpError from "@/response/HttpError";
 
 const errorHandler = function (err: any, req: Request, res: Response, next: NextFunction) {
     console.log(err);
 
     if (err instanceof ZodError) {
-        const errorMessages = err.errors.map((issue) => ({
+        const details = err.errors.map((issue) => ({
             message: issue.message,
             path: issue.path[0],
         }));
 
-        res.status(400).json(ErrorResponse.badRequest("ошибка валидации", errorMessages));
+        res.status(400).json(HttpError.validationError("ошибка валидации", details));
         return;
     }
 
-    if (err instanceof ErrorResponse) {
-        res.status(err.code).json({
-            status: err.status,
-            code: err.code,
-            message: err.message,
-            errors: err.errors,
-        });
+    if (err instanceof HttpError) {
+        const errorObject = new HttpError(err.statusCode, err.error.message, err.error.code, err.error.details);
+
+        res.status(err.statusCode).json(errorObject);
         return;
     }
 
-    res.status(500).json(ErrorResponse.iternalServerError());
+    res.status(500).json(HttpError.iternalServerError());
 }
 
 export default errorHandler;

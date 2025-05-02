@@ -5,11 +5,15 @@ import cookieParser from "cookie-parser";
 import requestIp from "request-ip";
 import cors from "cors";
 import errorHandler from "@/middlewares/errorHandler";
+import helmet from "helmet";
+import successResponse from "@/middlewares/successResponse";
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+app.use(helmet());
+app.disable('x-powered-by');
 app.use(express.json());
 app.use(cors({
     credentials: true,
@@ -18,6 +22,7 @@ app.use(cors({
 app.use(requestIp.mw());
 app.use(cookieParser());
 
+app.use(successResponse);
 app.use('/api', router);
 
 app.use(errorHandler);

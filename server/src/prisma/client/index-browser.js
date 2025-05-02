@@ -127,21 +127,31 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.ActivationTokensScalarFieldEnum = {
+exports.Prisma.UserDeviceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  deviceId: 'deviceId',
+  fingerprint: 'fingerprint',
+  ip: 'ip',
+  userAgent: 'userAgent',
+  isTrusted: 'isTrusted',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ActivationTokenScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   token: 'token',
   createdAt: 'createdAt',
-  exiresIn: 'exiresIn'
+  expiresIn: 'expiresIn'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
   token: 'token',
   userId: 'userId',
-  fingerprint: 'fingerprint',
-  ua: 'ua',
-  ip: 'ip',
+  userDeviceId: 'userDeviceId',
+  lastActivity: 'lastActivity',
   expiresIn: 'expiresIn',
   createdAt: 'createdAt'
 };
@@ -163,10 +173,16 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
   User: 'User',
-  ActivationTokens: 'ActivationTokens',
+  UserDevice: 'UserDevice',
+  ActivationToken: 'ActivationToken',
   Session: 'Session',
   Logs: 'Logs'
 };
