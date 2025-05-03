@@ -24,6 +24,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type UserDevice = $Result.DefaultSelection<Prisma.$UserDevicePayload>
 /**
+ * Model TwoFactorCode
+ * 
+ */
+export type TwoFactorCode = $Result.DefaultSelection<Prisma.$TwoFactorCodePayload>
+/**
  * Model ActivationToken
  * 
  */
@@ -34,10 +39,10 @@ export type ActivationToken = $Result.DefaultSelection<Prisma.$ActivationTokenPa
  */
 export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
 /**
- * Model Logs
+ * Model Log
  * 
  */
-export type Logs = $Result.DefaultSelection<Prisma.$LogsPayload>
+export type Log = $Result.DefaultSelection<Prisma.$LogPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -185,6 +190,16 @@ export class PrismaClient<
   get userDevice(): Prisma.UserDeviceDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.twoFactorCode`: Exposes CRUD operations for the **TwoFactorCode** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TwoFactorCodes
+    * const twoFactorCodes = await prisma.twoFactorCode.findMany()
+    * ```
+    */
+  get twoFactorCode(): Prisma.TwoFactorCodeDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.activationToken`: Exposes CRUD operations for the **ActivationToken** model.
     * Example usage:
     * ```ts
@@ -205,14 +220,14 @@ export class PrismaClient<
   get session(): Prisma.SessionDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.logs`: Exposes CRUD operations for the **Logs** model.
+   * `prisma.log`: Exposes CRUD operations for the **Log** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Logs
-    * const logs = await prisma.logs.findMany()
+    * const logs = await prisma.log.findMany()
     * ```
     */
-  get logs(): Prisma.LogsDelegate<ExtArgs, ClientOptions>;
+  get log(): Prisma.LogDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -655,9 +670,10 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     UserDevice: 'UserDevice',
+    TwoFactorCode: 'TwoFactorCode',
     ActivationToken: 'ActivationToken',
     Session: 'Session',
-    Logs: 'Logs'
+    Log: 'Log'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -676,7 +692,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userDevice" | "activationToken" | "session" | "logs"
+      modelProps: "user" | "userDevice" | "twoFactorCode" | "activationToken" | "session" | "log"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -828,6 +844,80 @@ export namespace Prisma {
           }
         }
       }
+      TwoFactorCode: {
+        payload: Prisma.$TwoFactorCodePayload<ExtArgs>
+        fields: Prisma.TwoFactorCodeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TwoFactorCodeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TwoFactorCodeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          findFirst: {
+            args: Prisma.TwoFactorCodeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TwoFactorCodeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          findMany: {
+            args: Prisma.TwoFactorCodeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>[]
+          }
+          create: {
+            args: Prisma.TwoFactorCodeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          createMany: {
+            args: Prisma.TwoFactorCodeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TwoFactorCodeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>[]
+          }
+          delete: {
+            args: Prisma.TwoFactorCodeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          update: {
+            args: Prisma.TwoFactorCodeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          deleteMany: {
+            args: Prisma.TwoFactorCodeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TwoFactorCodeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TwoFactorCodeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>[]
+          }
+          upsert: {
+            args: Prisma.TwoFactorCodeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TwoFactorCodePayload>
+          }
+          aggregate: {
+            args: Prisma.TwoFactorCodeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTwoFactorCode>
+          }
+          groupBy: {
+            args: Prisma.TwoFactorCodeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TwoFactorCodeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TwoFactorCodeCountArgs<ExtArgs>
+            result: $Utils.Optional<TwoFactorCodeCountAggregateOutputType> | number
+          }
+        }
+      }
       ActivationToken: {
         payload: Prisma.$ActivationTokenPayload<ExtArgs>
         fields: Prisma.ActivationTokenFieldRefs
@@ -976,77 +1066,77 @@ export namespace Prisma {
           }
         }
       }
-      Logs: {
-        payload: Prisma.$LogsPayload<ExtArgs>
-        fields: Prisma.LogsFieldRefs
+      Log: {
+        payload: Prisma.$LogPayload<ExtArgs>
+        fields: Prisma.LogFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.LogsFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload> | null
+            args: Prisma.LogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.LogsFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload>
+            args: Prisma.LogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
           }
           findFirst: {
-            args: Prisma.LogsFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload> | null
+            args: Prisma.LogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.LogsFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload>
+            args: Prisma.LogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
           }
           findMany: {
-            args: Prisma.LogsFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload>[]
+            args: Prisma.LogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>[]
           }
           create: {
-            args: Prisma.LogsCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload>
+            args: Prisma.LogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
           }
           createMany: {
-            args: Prisma.LogsCreateManyArgs<ExtArgs>
+            args: Prisma.LogCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.LogsCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload>[]
+            args: Prisma.LogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>[]
           }
           delete: {
-            args: Prisma.LogsDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload>
+            args: Prisma.LogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
           }
           update: {
-            args: Prisma.LogsUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload>
+            args: Prisma.LogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
           }
           deleteMany: {
-            args: Prisma.LogsDeleteManyArgs<ExtArgs>
+            args: Prisma.LogDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.LogsUpdateManyArgs<ExtArgs>
+            args: Prisma.LogUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.LogsUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload>[]
+            args: Prisma.LogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>[]
           }
           upsert: {
-            args: Prisma.LogsUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LogsPayload>
+            args: Prisma.LogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
           }
           aggregate: {
-            args: Prisma.LogsAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateLogs>
+            args: Prisma.LogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLog>
           }
           groupBy: {
-            args: Prisma.LogsGroupByArgs<ExtArgs>
-            result: $Utils.Optional<LogsGroupByOutputType>[]
+            args: Prisma.LogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogGroupByOutputType>[]
           }
           count: {
-            args: Prisma.LogsCountArgs<ExtArgs>
-            result: $Utils.Optional<LogsCountAggregateOutputType> | number
+            args: Prisma.LogCountArgs<ExtArgs>
+            result: $Utils.Optional<LogCountAggregateOutputType> | number
           }
         }
       }
@@ -1140,9 +1230,10 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     userDevice?: UserDeviceOmit
+    twoFactorCode?: TwoFactorCodeOmit
     activationToken?: ActivationTokenOmit
     session?: SessionOmit
-    logs?: LogsOmit
+    log?: LogOmit
   }
 
   /* Types for Logging */
@@ -1238,16 +1329,16 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     sessions: number
-    logs: number
     activationTokens: number
     userDevices: number
+    twoFactorVerificationCodes: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
-    logs?: boolean | UserCountOutputTypeCountLogsArgs
     activationTokens?: boolean | UserCountOutputTypeCountActivationTokensArgs
     userDevices?: boolean | UserCountOutputTypeCountUserDevicesArgs
+    twoFactorVerificationCodes?: boolean | UserCountOutputTypeCountTwoFactorVerificationCodesArgs
   }
 
   // Custom InputTypes
@@ -1271,13 +1362,6 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: LogsWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
   export type UserCountOutputTypeCountActivationTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ActivationTokenWhereInput
   }
@@ -1287,6 +1371,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountUserDevicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserDeviceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTwoFactorVerificationCodesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorCodeWhereInput
   }
 
 
@@ -1506,9 +1597,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
-    logs?: boolean | User$logsArgs<ExtArgs>
     activationTokens?: boolean | User$activationTokensArgs<ExtArgs>
     userDevices?: boolean | User$userDevicesArgs<ExtArgs>
+    twoFactorVerificationCodes?: boolean | User$twoFactorVerificationCodesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1545,9 +1636,9 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "isActivated" | "isAcceptedTerms" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
-    logs?: boolean | User$logsArgs<ExtArgs>
     activationTokens?: boolean | User$activationTokensArgs<ExtArgs>
     userDevices?: boolean | User$userDevicesArgs<ExtArgs>
+    twoFactorVerificationCodes?: boolean | User$twoFactorVerificationCodesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1557,9 +1648,9 @@ export namespace Prisma {
     name: "User"
     objects: {
       sessions: Prisma.$SessionPayload<ExtArgs>[]
-      logs: Prisma.$LogsPayload<ExtArgs>[]
       activationTokens: Prisma.$ActivationTokenPayload<ExtArgs>[]
       userDevices: Prisma.$UserDevicePayload<ExtArgs>[]
+      twoFactorVerificationCodes: Prisma.$TwoFactorCodePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1964,9 +2055,9 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    logs<T extends User$logsArgs<ExtArgs> = {}>(args?: Subset<T, User$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activationTokens<T extends User$activationTokensArgs<ExtArgs> = {}>(args?: Subset<T, User$activationTokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivationTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     userDevices<T extends User$userDevicesArgs<ExtArgs> = {}>(args?: Subset<T, User$userDevicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    twoFactorVerificationCodes<T extends User$twoFactorVerificationCodesArgs<ExtArgs> = {}>(args?: Subset<T, User$twoFactorVerificationCodesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2415,30 +2506,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.logs
-   */
-  export type User$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Logs
-     */
-    select?: LogsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Logs
-     */
-    omit?: LogsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LogsInclude<ExtArgs> | null
-    where?: LogsWhereInput
-    orderBy?: LogsOrderByWithRelationInput | LogsOrderByWithRelationInput[]
-    cursor?: LogsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: LogsScalarFieldEnum | LogsScalarFieldEnum[]
-  }
-
-  /**
    * User.activationTokens
    */
   export type User$activationTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2484,6 +2551,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserDeviceScalarFieldEnum | UserDeviceScalarFieldEnum[]
+  }
+
+  /**
+   * User.twoFactorVerificationCodes
+   */
+  export type User$twoFactorVerificationCodesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    where?: TwoFactorCodeWhereInput
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    cursor?: TwoFactorCodeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TwoFactorCodeScalarFieldEnum | TwoFactorCodeScalarFieldEnum[]
   }
 
   /**
@@ -3629,6 +3720,1064 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserDeviceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TwoFactorCode
+   */
+
+  export type AggregateTwoFactorCode = {
+    _count: TwoFactorCodeCountAggregateOutputType | null
+    _min: TwoFactorCodeMinAggregateOutputType | null
+    _max: TwoFactorCodeMaxAggregateOutputType | null
+  }
+
+  export type TwoFactorCodeMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    code: string | null
+    expiresIn: Date | null
+    createdAt: Date | null
+  }
+
+  export type TwoFactorCodeMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    code: string | null
+    expiresIn: Date | null
+    createdAt: Date | null
+  }
+
+  export type TwoFactorCodeCountAggregateOutputType = {
+    id: number
+    userId: number
+    code: number
+    expiresIn: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type TwoFactorCodeMinAggregateInputType = {
+    id?: true
+    userId?: true
+    code?: true
+    expiresIn?: true
+    createdAt?: true
+  }
+
+  export type TwoFactorCodeMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    code?: true
+    expiresIn?: true
+    createdAt?: true
+  }
+
+  export type TwoFactorCodeCountAggregateInputType = {
+    id?: true
+    userId?: true
+    code?: true
+    expiresIn?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type TwoFactorCodeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TwoFactorCode to aggregate.
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorCodes to fetch.
+     */
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TwoFactorCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TwoFactorCodes
+    **/
+    _count?: true | TwoFactorCodeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TwoFactorCodeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TwoFactorCodeMaxAggregateInputType
+  }
+
+  export type GetTwoFactorCodeAggregateType<T extends TwoFactorCodeAggregateArgs> = {
+        [P in keyof T & keyof AggregateTwoFactorCode]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTwoFactorCode[P]>
+      : GetScalarType<T[P], AggregateTwoFactorCode[P]>
+  }
+
+
+
+
+  export type TwoFactorCodeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TwoFactorCodeWhereInput
+    orderBy?: TwoFactorCodeOrderByWithAggregationInput | TwoFactorCodeOrderByWithAggregationInput[]
+    by: TwoFactorCodeScalarFieldEnum[] | TwoFactorCodeScalarFieldEnum
+    having?: TwoFactorCodeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TwoFactorCodeCountAggregateInputType | true
+    _min?: TwoFactorCodeMinAggregateInputType
+    _max?: TwoFactorCodeMaxAggregateInputType
+  }
+
+  export type TwoFactorCodeGroupByOutputType = {
+    id: string
+    userId: string
+    code: string
+    expiresIn: Date
+    createdAt: Date
+    _count: TwoFactorCodeCountAggregateOutputType | null
+    _min: TwoFactorCodeMinAggregateOutputType | null
+    _max: TwoFactorCodeMaxAggregateOutputType | null
+  }
+
+  type GetTwoFactorCodeGroupByPayload<T extends TwoFactorCodeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TwoFactorCodeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TwoFactorCodeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TwoFactorCodeGroupByOutputType[P]>
+            : GetScalarType<T[P], TwoFactorCodeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TwoFactorCodeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    code?: boolean
+    expiresIn?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["twoFactorCode"]>
+
+  export type TwoFactorCodeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    code?: boolean
+    expiresIn?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["twoFactorCode"]>
+
+  export type TwoFactorCodeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    code?: boolean
+    expiresIn?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["twoFactorCode"]>
+
+  export type TwoFactorCodeSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    code?: boolean
+    expiresIn?: boolean
+    createdAt?: boolean
+  }
+
+  export type TwoFactorCodeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "code" | "expiresIn" | "createdAt", ExtArgs["result"]["twoFactorCode"]>
+  export type TwoFactorCodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TwoFactorCodeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TwoFactorCodeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $TwoFactorCodePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TwoFactorCode"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      code: string
+      expiresIn: Date
+      createdAt: Date
+    }, ExtArgs["result"]["twoFactorCode"]>
+    composites: {}
+  }
+
+  type TwoFactorCodeGetPayload<S extends boolean | null | undefined | TwoFactorCodeDefaultArgs> = $Result.GetResult<Prisma.$TwoFactorCodePayload, S>
+
+  type TwoFactorCodeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TwoFactorCodeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TwoFactorCodeCountAggregateInputType | true
+    }
+
+  export interface TwoFactorCodeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TwoFactorCode'], meta: { name: 'TwoFactorCode' } }
+    /**
+     * Find zero or one TwoFactorCode that matches the filter.
+     * @param {TwoFactorCodeFindUniqueArgs} args - Arguments to find a TwoFactorCode
+     * @example
+     * // Get one TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TwoFactorCodeFindUniqueArgs>(args: SelectSubset<T, TwoFactorCodeFindUniqueArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TwoFactorCode that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TwoFactorCodeFindUniqueOrThrowArgs} args - Arguments to find a TwoFactorCode
+     * @example
+     * // Get one TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TwoFactorCodeFindUniqueOrThrowArgs>(args: SelectSubset<T, TwoFactorCodeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TwoFactorCode that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeFindFirstArgs} args - Arguments to find a TwoFactorCode
+     * @example
+     * // Get one TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TwoFactorCodeFindFirstArgs>(args?: SelectSubset<T, TwoFactorCodeFindFirstArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TwoFactorCode that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeFindFirstOrThrowArgs} args - Arguments to find a TwoFactorCode
+     * @example
+     * // Get one TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TwoFactorCodeFindFirstOrThrowArgs>(args?: SelectSubset<T, TwoFactorCodeFindFirstOrThrowArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TwoFactorCodes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TwoFactorCodes
+     * const twoFactorCodes = await prisma.twoFactorCode.findMany()
+     * 
+     * // Get first 10 TwoFactorCodes
+     * const twoFactorCodes = await prisma.twoFactorCode.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const twoFactorCodeWithIdOnly = await prisma.twoFactorCode.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TwoFactorCodeFindManyArgs>(args?: SelectSubset<T, TwoFactorCodeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TwoFactorCode.
+     * @param {TwoFactorCodeCreateArgs} args - Arguments to create a TwoFactorCode.
+     * @example
+     * // Create one TwoFactorCode
+     * const TwoFactorCode = await prisma.twoFactorCode.create({
+     *   data: {
+     *     // ... data to create a TwoFactorCode
+     *   }
+     * })
+     * 
+     */
+    create<T extends TwoFactorCodeCreateArgs>(args: SelectSubset<T, TwoFactorCodeCreateArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TwoFactorCodes.
+     * @param {TwoFactorCodeCreateManyArgs} args - Arguments to create many TwoFactorCodes.
+     * @example
+     * // Create many TwoFactorCodes
+     * const twoFactorCode = await prisma.twoFactorCode.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TwoFactorCodeCreateManyArgs>(args?: SelectSubset<T, TwoFactorCodeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TwoFactorCodes and returns the data saved in the database.
+     * @param {TwoFactorCodeCreateManyAndReturnArgs} args - Arguments to create many TwoFactorCodes.
+     * @example
+     * // Create many TwoFactorCodes
+     * const twoFactorCode = await prisma.twoFactorCode.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TwoFactorCodes and only return the `id`
+     * const twoFactorCodeWithIdOnly = await prisma.twoFactorCode.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TwoFactorCodeCreateManyAndReturnArgs>(args?: SelectSubset<T, TwoFactorCodeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TwoFactorCode.
+     * @param {TwoFactorCodeDeleteArgs} args - Arguments to delete one TwoFactorCode.
+     * @example
+     * // Delete one TwoFactorCode
+     * const TwoFactorCode = await prisma.twoFactorCode.delete({
+     *   where: {
+     *     // ... filter to delete one TwoFactorCode
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TwoFactorCodeDeleteArgs>(args: SelectSubset<T, TwoFactorCodeDeleteArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TwoFactorCode.
+     * @param {TwoFactorCodeUpdateArgs} args - Arguments to update one TwoFactorCode.
+     * @example
+     * // Update one TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TwoFactorCodeUpdateArgs>(args: SelectSubset<T, TwoFactorCodeUpdateArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TwoFactorCodes.
+     * @param {TwoFactorCodeDeleteManyArgs} args - Arguments to filter TwoFactorCodes to delete.
+     * @example
+     * // Delete a few TwoFactorCodes
+     * const { count } = await prisma.twoFactorCode.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TwoFactorCodeDeleteManyArgs>(args?: SelectSubset<T, TwoFactorCodeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TwoFactorCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TwoFactorCodes
+     * const twoFactorCode = await prisma.twoFactorCode.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TwoFactorCodeUpdateManyArgs>(args: SelectSubset<T, TwoFactorCodeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TwoFactorCodes and returns the data updated in the database.
+     * @param {TwoFactorCodeUpdateManyAndReturnArgs} args - Arguments to update many TwoFactorCodes.
+     * @example
+     * // Update many TwoFactorCodes
+     * const twoFactorCode = await prisma.twoFactorCode.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TwoFactorCodes and only return the `id`
+     * const twoFactorCodeWithIdOnly = await prisma.twoFactorCode.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TwoFactorCodeUpdateManyAndReturnArgs>(args: SelectSubset<T, TwoFactorCodeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TwoFactorCode.
+     * @param {TwoFactorCodeUpsertArgs} args - Arguments to update or create a TwoFactorCode.
+     * @example
+     * // Update or create a TwoFactorCode
+     * const twoFactorCode = await prisma.twoFactorCode.upsert({
+     *   create: {
+     *     // ... data to create a TwoFactorCode
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TwoFactorCode we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TwoFactorCodeUpsertArgs>(args: SelectSubset<T, TwoFactorCodeUpsertArgs<ExtArgs>>): Prisma__TwoFactorCodeClient<$Result.GetResult<Prisma.$TwoFactorCodePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TwoFactorCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeCountArgs} args - Arguments to filter TwoFactorCodes to count.
+     * @example
+     * // Count the number of TwoFactorCodes
+     * const count = await prisma.twoFactorCode.count({
+     *   where: {
+     *     // ... the filter for the TwoFactorCodes we want to count
+     *   }
+     * })
+    **/
+    count<T extends TwoFactorCodeCountArgs>(
+      args?: Subset<T, TwoFactorCodeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TwoFactorCodeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TwoFactorCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TwoFactorCodeAggregateArgs>(args: Subset<T, TwoFactorCodeAggregateArgs>): Prisma.PrismaPromise<GetTwoFactorCodeAggregateType<T>>
+
+    /**
+     * Group by TwoFactorCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TwoFactorCodeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TwoFactorCodeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TwoFactorCodeGroupByArgs['orderBy'] }
+        : { orderBy?: TwoFactorCodeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TwoFactorCodeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwoFactorCodeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TwoFactorCode model
+   */
+  readonly fields: TwoFactorCodeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TwoFactorCode.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TwoFactorCodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TwoFactorCode model
+   */
+  interface TwoFactorCodeFieldRefs {
+    readonly id: FieldRef<"TwoFactorCode", 'String'>
+    readonly userId: FieldRef<"TwoFactorCode", 'String'>
+    readonly code: FieldRef<"TwoFactorCode", 'String'>
+    readonly expiresIn: FieldRef<"TwoFactorCode", 'DateTime'>
+    readonly createdAt: FieldRef<"TwoFactorCode", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TwoFactorCode findUnique
+   */
+  export type TwoFactorCodeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorCode to fetch.
+     */
+    where: TwoFactorCodeWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorCode findUniqueOrThrow
+   */
+  export type TwoFactorCodeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorCode to fetch.
+     */
+    where: TwoFactorCodeWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorCode findFirst
+   */
+  export type TwoFactorCodeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorCode to fetch.
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorCodes to fetch.
+     */
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TwoFactorCodes.
+     */
+    cursor?: TwoFactorCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TwoFactorCodes.
+     */
+    distinct?: TwoFactorCodeScalarFieldEnum | TwoFactorCodeScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorCode findFirstOrThrow
+   */
+  export type TwoFactorCodeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorCode to fetch.
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorCodes to fetch.
+     */
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TwoFactorCodes.
+     */
+    cursor?: TwoFactorCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TwoFactorCodes.
+     */
+    distinct?: TwoFactorCodeScalarFieldEnum | TwoFactorCodeScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorCode findMany
+   */
+  export type TwoFactorCodeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which TwoFactorCodes to fetch.
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TwoFactorCodes to fetch.
+     */
+    orderBy?: TwoFactorCodeOrderByWithRelationInput | TwoFactorCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TwoFactorCodes.
+     */
+    cursor?: TwoFactorCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TwoFactorCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TwoFactorCodes.
+     */
+    skip?: number
+    distinct?: TwoFactorCodeScalarFieldEnum | TwoFactorCodeScalarFieldEnum[]
+  }
+
+  /**
+   * TwoFactorCode create
+   */
+  export type TwoFactorCodeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TwoFactorCode.
+     */
+    data: XOR<TwoFactorCodeCreateInput, TwoFactorCodeUncheckedCreateInput>
+  }
+
+  /**
+   * TwoFactorCode createMany
+   */
+  export type TwoFactorCodeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TwoFactorCodes.
+     */
+    data: TwoFactorCodeCreateManyInput | TwoFactorCodeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TwoFactorCode createManyAndReturn
+   */
+  export type TwoFactorCodeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * The data used to create many TwoFactorCodes.
+     */
+    data: TwoFactorCodeCreateManyInput | TwoFactorCodeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TwoFactorCode update
+   */
+  export type TwoFactorCodeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TwoFactorCode.
+     */
+    data: XOR<TwoFactorCodeUpdateInput, TwoFactorCodeUncheckedUpdateInput>
+    /**
+     * Choose, which TwoFactorCode to update.
+     */
+    where: TwoFactorCodeWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorCode updateMany
+   */
+  export type TwoFactorCodeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TwoFactorCodes.
+     */
+    data: XOR<TwoFactorCodeUpdateManyMutationInput, TwoFactorCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which TwoFactorCodes to update
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * Limit how many TwoFactorCodes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TwoFactorCode updateManyAndReturn
+   */
+  export type TwoFactorCodeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * The data used to update TwoFactorCodes.
+     */
+    data: XOR<TwoFactorCodeUpdateManyMutationInput, TwoFactorCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which TwoFactorCodes to update
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * Limit how many TwoFactorCodes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TwoFactorCode upsert
+   */
+  export type TwoFactorCodeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TwoFactorCode to update in case it exists.
+     */
+    where: TwoFactorCodeWhereUniqueInput
+    /**
+     * In case the TwoFactorCode found by the `where` argument doesn't exist, create a new TwoFactorCode with this data.
+     */
+    create: XOR<TwoFactorCodeCreateInput, TwoFactorCodeUncheckedCreateInput>
+    /**
+     * In case the TwoFactorCode was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TwoFactorCodeUpdateInput, TwoFactorCodeUncheckedUpdateInput>
+  }
+
+  /**
+   * TwoFactorCode delete
+   */
+  export type TwoFactorCodeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
+    /**
+     * Filter which TwoFactorCode to delete.
+     */
+    where: TwoFactorCodeWhereUniqueInput
+  }
+
+  /**
+   * TwoFactorCode deleteMany
+   */
+  export type TwoFactorCodeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TwoFactorCodes to delete
+     */
+    where?: TwoFactorCodeWhereInput
+    /**
+     * Limit how many TwoFactorCodes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TwoFactorCode without action
+   */
+  export type TwoFactorCodeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TwoFactorCode
+     */
+    select?: TwoFactorCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TwoFactorCode
+     */
+    omit?: TwoFactorCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TwoFactorCodeInclude<ExtArgs> | null
   }
 
 
@@ -5783,30 +6932,30 @@ export namespace Prisma {
 
 
   /**
-   * Model Logs
+   * Model Log
    */
 
-  export type AggregateLogs = {
-    _count: LogsCountAggregateOutputType | null
-    _min: LogsMinAggregateOutputType | null
-    _max: LogsMaxAggregateOutputType | null
+  export type AggregateLog = {
+    _count: LogCountAggregateOutputType | null
+    _min: LogMinAggregateOutputType | null
+    _max: LogMaxAggregateOutputType | null
   }
 
-  export type LogsMinAggregateOutputType = {
+  export type LogMinAggregateOutputType = {
     id: string | null
     messsage: string | null
     userId: string | null
     createdAt: Date | null
   }
 
-  export type LogsMaxAggregateOutputType = {
+  export type LogMaxAggregateOutputType = {
     id: string | null
     messsage: string | null
     userId: string | null
     createdAt: Date | null
   }
 
-  export type LogsCountAggregateOutputType = {
+  export type LogCountAggregateOutputType = {
     id: number
     messsage: number
     userId: number
@@ -5815,21 +6964,21 @@ export namespace Prisma {
   }
 
 
-  export type LogsMinAggregateInputType = {
+  export type LogMinAggregateInputType = {
     id?: true
     messsage?: true
     userId?: true
     createdAt?: true
   }
 
-  export type LogsMaxAggregateInputType = {
+  export type LogMaxAggregateInputType = {
     id?: true
     messsage?: true
     userId?: true
     createdAt?: true
   }
 
-  export type LogsCountAggregateInputType = {
+  export type LogCountAggregateInputType = {
     id?: true
     messsage?: true
     userId?: true
@@ -5837,23 +6986,23 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type LogsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Logs to aggregate.
+     * Filter which Log to aggregate.
      */
-    where?: LogsWhereInput
+    where?: LogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Logs to fetch.
      */
-    orderBy?: LogsOrderByWithRelationInput | LogsOrderByWithRelationInput[]
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: LogsWhereUniqueInput
+    cursor?: LogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -5871,250 +7020,236 @@ export namespace Prisma {
      * 
      * Count returned Logs
     **/
-    _count?: true | LogsCountAggregateInputType
+    _count?: true | LogCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: LogsMinAggregateInputType
+    _min?: LogMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: LogsMaxAggregateInputType
+    _max?: LogMaxAggregateInputType
   }
 
-  export type GetLogsAggregateType<T extends LogsAggregateArgs> = {
-        [P in keyof T & keyof AggregateLogs]: P extends '_count' | 'count'
+  export type GetLogAggregateType<T extends LogAggregateArgs> = {
+        [P in keyof T & keyof AggregateLog]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateLogs[P]>
-      : GetScalarType<T[P], AggregateLogs[P]>
+        : GetScalarType<T[P], AggregateLog[P]>
+      : GetScalarType<T[P], AggregateLog[P]>
   }
 
 
 
 
-  export type LogsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: LogsWhereInput
-    orderBy?: LogsOrderByWithAggregationInput | LogsOrderByWithAggregationInput[]
-    by: LogsScalarFieldEnum[] | LogsScalarFieldEnum
-    having?: LogsScalarWhereWithAggregatesInput
+  export type LogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogWhereInput
+    orderBy?: LogOrderByWithAggregationInput | LogOrderByWithAggregationInput[]
+    by: LogScalarFieldEnum[] | LogScalarFieldEnum
+    having?: LogScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: LogsCountAggregateInputType | true
-    _min?: LogsMinAggregateInputType
-    _max?: LogsMaxAggregateInputType
+    _count?: LogCountAggregateInputType | true
+    _min?: LogMinAggregateInputType
+    _max?: LogMaxAggregateInputType
   }
 
-  export type LogsGroupByOutputType = {
+  export type LogGroupByOutputType = {
     id: string
     messsage: string
     userId: string
     createdAt: Date | null
-    _count: LogsCountAggregateOutputType | null
-    _min: LogsMinAggregateOutputType | null
-    _max: LogsMaxAggregateOutputType | null
+    _count: LogCountAggregateOutputType | null
+    _min: LogMinAggregateOutputType | null
+    _max: LogMaxAggregateOutputType | null
   }
 
-  type GetLogsGroupByPayload<T extends LogsGroupByArgs> = Prisma.PrismaPromise<
+  type GetLogGroupByPayload<T extends LogGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<LogsGroupByOutputType, T['by']> &
+      PickEnumerable<LogGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof LogsGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof LogGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], LogsGroupByOutputType[P]>
-            : GetScalarType<T[P], LogsGroupByOutputType[P]>
+              : GetScalarType<T[P], LogGroupByOutputType[P]>
+            : GetScalarType<T[P], LogGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type LogsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type LogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     messsage?: boolean
     userId?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["logs"]>
+  }, ExtArgs["result"]["log"]>
 
-  export type LogsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type LogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     messsage?: boolean
     userId?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["logs"]>
+  }, ExtArgs["result"]["log"]>
 
-  export type LogsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type LogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     messsage?: boolean
     userId?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["logs"]>
+  }, ExtArgs["result"]["log"]>
 
-  export type LogsSelectScalar = {
+  export type LogSelectScalar = {
     id?: boolean
     messsage?: boolean
     userId?: boolean
     createdAt?: boolean
   }
 
-  export type LogsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "messsage" | "userId" | "createdAt", ExtArgs["result"]["logs"]>
-  export type LogsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type LogsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type LogsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
+  export type LogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "messsage" | "userId" | "createdAt", ExtArgs["result"]["log"]>
 
-  export type $LogsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Logs"
-    objects: {
-      user: Prisma.$UserPayload<ExtArgs>
-    }
+  export type $LogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Log"
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
       messsage: string
       userId: string
       createdAt: Date | null
-    }, ExtArgs["result"]["logs"]>
+    }, ExtArgs["result"]["log"]>
     composites: {}
   }
 
-  type LogsGetPayload<S extends boolean | null | undefined | LogsDefaultArgs> = $Result.GetResult<Prisma.$LogsPayload, S>
+  type LogGetPayload<S extends boolean | null | undefined | LogDefaultArgs> = $Result.GetResult<Prisma.$LogPayload, S>
 
-  type LogsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<LogsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: LogsCountAggregateInputType | true
+  type LogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LogCountAggregateInputType | true
     }
 
-  export interface LogsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Logs'], meta: { name: 'Logs' } }
+  export interface LogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Log'], meta: { name: 'Log' } }
     /**
-     * Find zero or one Logs that matches the filter.
-     * @param {LogsFindUniqueArgs} args - Arguments to find a Logs
+     * Find zero or one Log that matches the filter.
+     * @param {LogFindUniqueArgs} args - Arguments to find a Log
      * @example
-     * // Get one Logs
-     * const logs = await prisma.logs.findUnique({
+     * // Get one Log
+     * const log = await prisma.log.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends LogsFindUniqueArgs>(args: SelectSubset<T, LogsFindUniqueArgs<ExtArgs>>): Prisma__LogsClient<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends LogFindUniqueArgs>(args: SelectSubset<T, LogFindUniqueArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Logs that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Log that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {LogsFindUniqueOrThrowArgs} args - Arguments to find a Logs
+     * @param {LogFindUniqueOrThrowArgs} args - Arguments to find a Log
      * @example
-     * // Get one Logs
-     * const logs = await prisma.logs.findUniqueOrThrow({
+     * // Get one Log
+     * const log = await prisma.log.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends LogsFindUniqueOrThrowArgs>(args: SelectSubset<T, LogsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogsClient<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends LogFindUniqueOrThrowArgs>(args: SelectSubset<T, LogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Logs that matches the filter.
+     * Find the first Log that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LogsFindFirstArgs} args - Arguments to find a Logs
+     * @param {LogFindFirstArgs} args - Arguments to find a Log
      * @example
-     * // Get one Logs
-     * const logs = await prisma.logs.findFirst({
+     * // Get one Log
+     * const log = await prisma.log.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends LogsFindFirstArgs>(args?: SelectSubset<T, LogsFindFirstArgs<ExtArgs>>): Prisma__LogsClient<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends LogFindFirstArgs>(args?: SelectSubset<T, LogFindFirstArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Logs that matches the filter or
+     * Find the first Log that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LogsFindFirstOrThrowArgs} args - Arguments to find a Logs
+     * @param {LogFindFirstOrThrowArgs} args - Arguments to find a Log
      * @example
-     * // Get one Logs
-     * const logs = await prisma.logs.findFirstOrThrow({
+     * // Get one Log
+     * const log = await prisma.log.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends LogsFindFirstOrThrowArgs>(args?: SelectSubset<T, LogsFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogsClient<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends LogFindFirstOrThrowArgs>(args?: SelectSubset<T, LogFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more Logs that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LogsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {LogFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all Logs
-     * const logs = await prisma.logs.findMany()
+     * const logs = await prisma.log.findMany()
      * 
      * // Get first 10 Logs
-     * const logs = await prisma.logs.findMany({ take: 10 })
+     * const logs = await prisma.log.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const logsWithIdOnly = await prisma.logs.findMany({ select: { id: true } })
+     * const logWithIdOnly = await prisma.log.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends LogsFindManyArgs>(args?: SelectSubset<T, LogsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends LogFindManyArgs>(args?: SelectSubset<T, LogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Logs.
-     * @param {LogsCreateArgs} args - Arguments to create a Logs.
+     * Create a Log.
+     * @param {LogCreateArgs} args - Arguments to create a Log.
      * @example
-     * // Create one Logs
-     * const Logs = await prisma.logs.create({
+     * // Create one Log
+     * const Log = await prisma.log.create({
      *   data: {
-     *     // ... data to create a Logs
+     *     // ... data to create a Log
      *   }
      * })
      * 
      */
-    create<T extends LogsCreateArgs>(args: SelectSubset<T, LogsCreateArgs<ExtArgs>>): Prisma__LogsClient<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends LogCreateArgs>(args: SelectSubset<T, LogCreateArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many Logs.
-     * @param {LogsCreateManyArgs} args - Arguments to create many Logs.
+     * @param {LogCreateManyArgs} args - Arguments to create many Logs.
      * @example
      * // Create many Logs
-     * const logs = await prisma.logs.createMany({
+     * const log = await prisma.log.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends LogsCreateManyArgs>(args?: SelectSubset<T, LogsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends LogCreateManyArgs>(args?: SelectSubset<T, LogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create many Logs and returns the data saved in the database.
-     * @param {LogsCreateManyAndReturnArgs} args - Arguments to create many Logs.
+     * @param {LogCreateManyAndReturnArgs} args - Arguments to create many Logs.
      * @example
      * // Create many Logs
-     * const logs = await prisma.logs.createManyAndReturn({
+     * const log = await prisma.log.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
      * // Create many Logs and only return the `id`
-     * const logsWithIdOnly = await prisma.logs.createManyAndReturn({
+     * const logWithIdOnly = await prisma.log.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -6124,28 +7259,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends LogsCreateManyAndReturnArgs>(args?: SelectSubset<T, LogsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends LogCreateManyAndReturnArgs>(args?: SelectSubset<T, LogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Logs.
-     * @param {LogsDeleteArgs} args - Arguments to delete one Logs.
+     * Delete a Log.
+     * @param {LogDeleteArgs} args - Arguments to delete one Log.
      * @example
-     * // Delete one Logs
-     * const Logs = await prisma.logs.delete({
+     * // Delete one Log
+     * const Log = await prisma.log.delete({
      *   where: {
-     *     // ... filter to delete one Logs
+     *     // ... filter to delete one Log
      *   }
      * })
      * 
      */
-    delete<T extends LogsDeleteArgs>(args: SelectSubset<T, LogsDeleteArgs<ExtArgs>>): Prisma__LogsClient<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends LogDeleteArgs>(args: SelectSubset<T, LogDeleteArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Logs.
-     * @param {LogsUpdateArgs} args - Arguments to update one Logs.
+     * Update one Log.
+     * @param {LogUpdateArgs} args - Arguments to update one Log.
      * @example
-     * // Update one Logs
-     * const logs = await prisma.logs.update({
+     * // Update one Log
+     * const log = await prisma.log.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6155,30 +7290,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends LogsUpdateArgs>(args: SelectSubset<T, LogsUpdateArgs<ExtArgs>>): Prisma__LogsClient<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends LogUpdateArgs>(args: SelectSubset<T, LogUpdateArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more Logs.
-     * @param {LogsDeleteManyArgs} args - Arguments to filter Logs to delete.
+     * @param {LogDeleteManyArgs} args - Arguments to filter Logs to delete.
      * @example
      * // Delete a few Logs
-     * const { count } = await prisma.logs.deleteMany({
+     * const { count } = await prisma.log.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends LogsDeleteManyArgs>(args?: SelectSubset<T, LogsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends LogDeleteManyArgs>(args?: SelectSubset<T, LogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Logs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LogsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {LogUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
      * // Update many Logs
-     * const logs = await prisma.logs.updateMany({
+     * const log = await prisma.log.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6188,14 +7323,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends LogsUpdateManyArgs>(args: SelectSubset<T, LogsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends LogUpdateManyArgs>(args: SelectSubset<T, LogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Logs and returns the data updated in the database.
-     * @param {LogsUpdateManyAndReturnArgs} args - Arguments to update many Logs.
+     * @param {LogUpdateManyAndReturnArgs} args - Arguments to update many Logs.
      * @example
      * // Update many Logs
-     * const logs = await prisma.logs.updateManyAndReturn({
+     * const log = await prisma.log.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6205,7 +7340,7 @@ export namespace Prisma {
      * })
      * 
      * // Update zero or more Logs and only return the `id`
-     * const logsWithIdOnly = await prisma.logs.updateManyAndReturn({
+     * const logWithIdOnly = await prisma.log.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -6218,56 +7353,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends LogsUpdateManyAndReturnArgs>(args: SelectSubset<T, LogsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends LogUpdateManyAndReturnArgs>(args: SelectSubset<T, LogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Logs.
-     * @param {LogsUpsertArgs} args - Arguments to update or create a Logs.
+     * Create or update one Log.
+     * @param {LogUpsertArgs} args - Arguments to update or create a Log.
      * @example
-     * // Update or create a Logs
-     * const logs = await prisma.logs.upsert({
+     * // Update or create a Log
+     * const log = await prisma.log.upsert({
      *   create: {
-     *     // ... data to create a Logs
+     *     // ... data to create a Log
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Logs we want to update
+     *     // ... the filter for the Log we want to update
      *   }
      * })
      */
-    upsert<T extends LogsUpsertArgs>(args: SelectSubset<T, LogsUpsertArgs<ExtArgs>>): Prisma__LogsClient<$Result.GetResult<Prisma.$LogsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends LogUpsertArgs>(args: SelectSubset<T, LogUpsertArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
      * Count the number of Logs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LogsCountArgs} args - Arguments to filter Logs to count.
+     * @param {LogCountArgs} args - Arguments to filter Logs to count.
      * @example
      * // Count the number of Logs
-     * const count = await prisma.logs.count({
+     * const count = await prisma.log.count({
      *   where: {
      *     // ... the filter for the Logs we want to count
      *   }
      * })
     **/
-    count<T extends LogsCountArgs>(
-      args?: Subset<T, LogsCountArgs>,
+    count<T extends LogCountArgs>(
+      args?: Subset<T, LogCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], LogsCountAggregateOutputType>
+          : GetScalarType<T['select'], LogCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Logs.
+     * Allows you to perform aggregations operations on a Log.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LogsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {LogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -6287,13 +7422,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends LogsAggregateArgs>(args: Subset<T, LogsAggregateArgs>): Prisma.PrismaPromise<GetLogsAggregateType<T>>
+    aggregate<T extends LogAggregateArgs>(args: Subset<T, LogAggregateArgs>): Prisma.PrismaPromise<GetLogAggregateType<T>>
 
     /**
-     * Group by Logs.
+     * Group by Log.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LogsGroupByArgs} args - Group by arguments.
+     * @param {LogGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -6308,14 +7443,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends LogsGroupByArgs,
+      T extends LogGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: LogsGroupByArgs['orderBy'] }
-        : { orderBy?: LogsGroupByArgs['orderBy'] },
+        ? { orderBy: LogGroupByArgs['orderBy'] }
+        : { orderBy?: LogGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -6364,22 +7499,21 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, LogsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, LogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Logs model
+   * Fields of the Log model
    */
-  readonly fields: LogsFieldRefs;
+  readonly fields: LogFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Logs.
+   * The delegate class that acts as a "Promise-like" for Log.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__LogsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__LogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6406,93 +7540,81 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Logs model
+   * Fields of the Log model
    */
-  interface LogsFieldRefs {
-    readonly id: FieldRef<"Logs", 'String'>
-    readonly messsage: FieldRef<"Logs", 'String'>
-    readonly userId: FieldRef<"Logs", 'String'>
-    readonly createdAt: FieldRef<"Logs", 'DateTime'>
+  interface LogFieldRefs {
+    readonly id: FieldRef<"Log", 'String'>
+    readonly messsage: FieldRef<"Log", 'String'>
+    readonly userId: FieldRef<"Log", 'String'>
+    readonly createdAt: FieldRef<"Log", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Logs findUnique
+   * Log findUnique
    */
-  export type LogsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelect<ExtArgs> | null
+    select?: LogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Log to fetch.
      */
-    include?: LogsInclude<ExtArgs> | null
-    /**
-     * Filter, which Logs to fetch.
-     */
-    where: LogsWhereUniqueInput
+    where: LogWhereUniqueInput
   }
 
   /**
-   * Logs findUniqueOrThrow
+   * Log findUniqueOrThrow
    */
-  export type LogsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelect<ExtArgs> | null
+    select?: LogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Log to fetch.
      */
-    include?: LogsInclude<ExtArgs> | null
-    /**
-     * Filter, which Logs to fetch.
-     */
-    where: LogsWhereUniqueInput
+    where: LogWhereUniqueInput
   }
 
   /**
-   * Logs findFirst
+   * Log findFirst
    */
-  export type LogsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelect<ExtArgs> | null
+    select?: LogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Log to fetch.
      */
-    include?: LogsInclude<ExtArgs> | null
-    /**
-     * Filter, which Logs to fetch.
-     */
-    where?: LogsWhereInput
+    where?: LogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Logs to fetch.
      */
-    orderBy?: LogsOrderByWithRelationInput | LogsOrderByWithRelationInput[]
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for searching for Logs.
      */
-    cursor?: LogsWhereUniqueInput
+    cursor?: LogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -6510,41 +7632,37 @@ export namespace Prisma {
      * 
      * Filter by unique combinations of Logs.
      */
-    distinct?: LogsScalarFieldEnum | LogsScalarFieldEnum[]
+    distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
   }
 
   /**
-   * Logs findFirstOrThrow
+   * Log findFirstOrThrow
    */
-  export type LogsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelect<ExtArgs> | null
+    select?: LogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Log to fetch.
      */
-    include?: LogsInclude<ExtArgs> | null
-    /**
-     * Filter, which Logs to fetch.
-     */
-    where?: LogsWhereInput
+    where?: LogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Logs to fetch.
      */
-    orderBy?: LogsOrderByWithRelationInput | LogsOrderByWithRelationInput[]
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for searching for Logs.
      */
-    cursor?: LogsWhereUniqueInput
+    cursor?: LogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -6562,41 +7680,37 @@ export namespace Prisma {
      * 
      * Filter by unique combinations of Logs.
      */
-    distinct?: LogsScalarFieldEnum | LogsScalarFieldEnum[]
+    distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
   }
 
   /**
-   * Logs findMany
+   * Log findMany
    */
-  export type LogsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelect<ExtArgs> | null
+    select?: LogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LogsInclude<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
      * Filter, which Logs to fetch.
      */
-    where?: LogsWhereInput
+    where?: LogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Logs to fetch.
      */
-    orderBy?: LogsOrderByWithRelationInput | LogsOrderByWithRelationInput[]
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for listing Logs.
      */
-    cursor?: LogsWhereUniqueInput
+    cursor?: LogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -6609,103 +7723,91 @@ export namespace Prisma {
      * Skip the first `n` Logs.
      */
     skip?: number
-    distinct?: LogsScalarFieldEnum | LogsScalarFieldEnum[]
+    distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
   }
 
   /**
-   * Logs create
+   * Log create
    */
-  export type LogsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelect<ExtArgs> | null
+    select?: LogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The data needed to create a Log.
      */
-    include?: LogsInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Logs.
-     */
-    data: XOR<LogsCreateInput, LogsUncheckedCreateInput>
+    data: XOR<LogCreateInput, LogUncheckedCreateInput>
   }
 
   /**
-   * Logs createMany
+   * Log createMany
    */
-  export type LogsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to create many Logs.
      */
-    data: LogsCreateManyInput | LogsCreateManyInput[]
+    data: LogCreateManyInput | LogCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Logs createManyAndReturn
+   * Log createManyAndReturn
    */
-  export type LogsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelectCreateManyAndReturn<ExtArgs> | null
+    select?: LogSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
      * The data used to create many Logs.
      */
-    data: LogsCreateManyInput | LogsCreateManyInput[]
+    data: LogCreateManyInput | LogCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LogsIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Logs update
+   * Log update
    */
-  export type LogsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelect<ExtArgs> | null
+    select?: LogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The data needed to update a Log.
      */
-    include?: LogsInclude<ExtArgs> | null
+    data: XOR<LogUpdateInput, LogUncheckedUpdateInput>
     /**
-     * The data needed to update a Logs.
+     * Choose, which Log to update.
      */
-    data: XOR<LogsUpdateInput, LogsUncheckedUpdateInput>
-    /**
-     * Choose, which Logs to update.
-     */
-    where: LogsWhereUniqueInput
+    where: LogWhereUniqueInput
   }
 
   /**
-   * Logs updateMany
+   * Log updateMany
    */
-  export type LogsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to update Logs.
      */
-    data: XOR<LogsUpdateManyMutationInput, LogsUncheckedUpdateManyInput>
+    data: XOR<LogUpdateManyMutationInput, LogUncheckedUpdateManyInput>
     /**
      * Filter which Logs to update
      */
-    where?: LogsWhereInput
+    where?: LogWhereInput
     /**
      * Limit how many Logs to update.
      */
@@ -6713,95 +7815,83 @@ export namespace Prisma {
   }
 
   /**
-   * Logs updateManyAndReturn
+   * Log updateManyAndReturn
    */
-  export type LogsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: LogSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
      * The data used to update Logs.
      */
-    data: XOR<LogsUpdateManyMutationInput, LogsUncheckedUpdateManyInput>
+    data: XOR<LogUpdateManyMutationInput, LogUncheckedUpdateManyInput>
     /**
      * Filter which Logs to update
      */
-    where?: LogsWhereInput
+    where?: LogWhereInput
     /**
      * Limit how many Logs to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LogsIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Logs upsert
+   * Log upsert
    */
-  export type LogsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelect<ExtArgs> | null
+    select?: LogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The filter to search for the Log to update in case it exists.
      */
-    include?: LogsInclude<ExtArgs> | null
+    where: LogWhereUniqueInput
     /**
-     * The filter to search for the Logs to update in case it exists.
+     * In case the Log found by the `where` argument doesn't exist, create a new Log with this data.
      */
-    where: LogsWhereUniqueInput
+    create: XOR<LogCreateInput, LogUncheckedCreateInput>
     /**
-     * In case the Logs found by the `where` argument doesn't exist, create a new Logs with this data.
+     * In case the Log was found with the provided `where` argument, update it with this data.
      */
-    create: XOR<LogsCreateInput, LogsUncheckedCreateInput>
-    /**
-     * In case the Logs was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<LogsUpdateInput, LogsUncheckedUpdateInput>
+    update: XOR<LogUpdateInput, LogUncheckedUpdateInput>
   }
 
   /**
-   * Logs delete
+   * Log delete
    */
-  export type LogsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelect<ExtArgs> | null
+    select?: LogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter which Log to delete.
      */
-    include?: LogsInclude<ExtArgs> | null
-    /**
-     * Filter which Logs to delete.
-     */
-    where: LogsWhereUniqueInput
+    where: LogWhereUniqueInput
   }
 
   /**
-   * Logs deleteMany
+   * Log deleteMany
    */
-  export type LogsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which Logs to delete
      */
-    where?: LogsWhereInput
+    where?: LogWhereInput
     /**
      * Limit how many Logs to delete.
      */
@@ -6809,21 +7899,17 @@ export namespace Prisma {
   }
 
   /**
-   * Logs without action
+   * Log without action
    */
-  export type LogsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Logs
+     * Select specific fields to fetch from the Log
      */
-    select?: LogsSelect<ExtArgs> | null
+    select?: LogSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Logs
+     * Omit specific fields from the Log
      */
-    omit?: LogsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LogsInclude<ExtArgs> | null
+    omit?: LogOmit<ExtArgs> | null
   }
 
 
@@ -6868,6 +7954,17 @@ export namespace Prisma {
   export type UserDeviceScalarFieldEnum = (typeof UserDeviceScalarFieldEnum)[keyof typeof UserDeviceScalarFieldEnum]
 
 
+  export const TwoFactorCodeScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    code: 'code',
+    expiresIn: 'expiresIn',
+    createdAt: 'createdAt'
+  };
+
+  export type TwoFactorCodeScalarFieldEnum = (typeof TwoFactorCodeScalarFieldEnum)[keyof typeof TwoFactorCodeScalarFieldEnum]
+
+
   export const ActivationTokenScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -6892,14 +7989,14 @@ export namespace Prisma {
   export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
-  export const LogsScalarFieldEnum: {
+  export const LogScalarFieldEnum: {
     id: 'id',
     messsage: 'messsage',
     userId: 'userId',
     createdAt: 'createdAt'
   };
 
-  export type LogsScalarFieldEnum = (typeof LogsScalarFieldEnum)[keyof typeof LogsScalarFieldEnum]
+  export type LogScalarFieldEnum = (typeof LogScalarFieldEnum)[keyof typeof LogScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -6995,9 +8092,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
-    logs?: LogsListRelationFilter
     activationTokens?: ActivationTokenListRelationFilter
     userDevices?: UserDeviceListRelationFilter
+    twoFactorVerificationCodes?: TwoFactorCodeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7009,9 +8106,9 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     sessions?: SessionOrderByRelationAggregateInput
-    logs?: LogsOrderByRelationAggregateInput
     activationTokens?: ActivationTokenOrderByRelationAggregateInput
     userDevices?: UserDeviceOrderByRelationAggregateInput
+    twoFactorVerificationCodes?: TwoFactorCodeOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7026,9 +8123,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
-    logs?: LogsListRelationFilter
     activationTokens?: ActivationTokenListRelationFilter
     userDevices?: UserDeviceListRelationFilter
+    twoFactorVerificationCodes?: TwoFactorCodeListRelationFilter
   }, "id" | "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7129,6 +8226,61 @@ export namespace Prisma {
     userAgent?: StringWithAggregatesFilter<"UserDevice"> | string
     isTrusted?: BoolWithAggregatesFilter<"UserDevice"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"UserDevice"> | Date | string
+  }
+
+  export type TwoFactorCodeWhereInput = {
+    AND?: TwoFactorCodeWhereInput | TwoFactorCodeWhereInput[]
+    OR?: TwoFactorCodeWhereInput[]
+    NOT?: TwoFactorCodeWhereInput | TwoFactorCodeWhereInput[]
+    id?: StringFilter<"TwoFactorCode"> | string
+    userId?: StringFilter<"TwoFactorCode"> | string
+    code?: StringFilter<"TwoFactorCode"> | string
+    expiresIn?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    createdAt?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type TwoFactorCodeOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    code?: SortOrder
+    expiresIn?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type TwoFactorCodeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TwoFactorCodeWhereInput | TwoFactorCodeWhereInput[]
+    OR?: TwoFactorCodeWhereInput[]
+    NOT?: TwoFactorCodeWhereInput | TwoFactorCodeWhereInput[]
+    userId?: StringFilter<"TwoFactorCode"> | string
+    code?: StringFilter<"TwoFactorCode"> | string
+    expiresIn?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    createdAt?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type TwoFactorCodeOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    code?: SortOrder
+    expiresIn?: SortOrder
+    createdAt?: SortOrder
+    _count?: TwoFactorCodeCountOrderByAggregateInput
+    _max?: TwoFactorCodeMaxOrderByAggregateInput
+    _min?: TwoFactorCodeMinOrderByAggregateInput
+  }
+
+  export type TwoFactorCodeScalarWhereWithAggregatesInput = {
+    AND?: TwoFactorCodeScalarWhereWithAggregatesInput | TwoFactorCodeScalarWhereWithAggregatesInput[]
+    OR?: TwoFactorCodeScalarWhereWithAggregatesInput[]
+    NOT?: TwoFactorCodeScalarWhereWithAggregatesInput | TwoFactorCodeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TwoFactorCode"> | string
+    userId?: StringWithAggregatesFilter<"TwoFactorCode"> | string
+    code?: StringWithAggregatesFilter<"TwoFactorCode"> | string
+    expiresIn?: DateTimeWithAggregatesFilter<"TwoFactorCode"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"TwoFactorCode"> | Date | string
   }
 
   export type ActivationTokenWhereInput = {
@@ -7254,54 +8406,51 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
   }
 
-  export type LogsWhereInput = {
-    AND?: LogsWhereInput | LogsWhereInput[]
-    OR?: LogsWhereInput[]
-    NOT?: LogsWhereInput | LogsWhereInput[]
-    id?: StringFilter<"Logs"> | string
-    messsage?: StringFilter<"Logs"> | string
-    userId?: StringFilter<"Logs"> | string
-    createdAt?: DateTimeNullableFilter<"Logs"> | Date | string | null
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  export type LogWhereInput = {
+    AND?: LogWhereInput | LogWhereInput[]
+    OR?: LogWhereInput[]
+    NOT?: LogWhereInput | LogWhereInput[]
+    id?: StringFilter<"Log"> | string
+    messsage?: StringFilter<"Log"> | string
+    userId?: StringFilter<"Log"> | string
+    createdAt?: DateTimeNullableFilter<"Log"> | Date | string | null
   }
 
-  export type LogsOrderByWithRelationInput = {
+  export type LogOrderByWithRelationInput = {
     id?: SortOrder
     messsage?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrderInput | SortOrder
-    user?: UserOrderByWithRelationInput
   }
 
-  export type LogsWhereUniqueInput = Prisma.AtLeast<{
+  export type LogWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: LogsWhereInput | LogsWhereInput[]
-    OR?: LogsWhereInput[]
-    NOT?: LogsWhereInput | LogsWhereInput[]
-    messsage?: StringFilter<"Logs"> | string
-    userId?: StringFilter<"Logs"> | string
-    createdAt?: DateTimeNullableFilter<"Logs"> | Date | string | null
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    AND?: LogWhereInput | LogWhereInput[]
+    OR?: LogWhereInput[]
+    NOT?: LogWhereInput | LogWhereInput[]
+    messsage?: StringFilter<"Log"> | string
+    userId?: StringFilter<"Log"> | string
+    createdAt?: DateTimeNullableFilter<"Log"> | Date | string | null
   }, "id" | "id">
 
-  export type LogsOrderByWithAggregationInput = {
+  export type LogOrderByWithAggregationInput = {
     id?: SortOrder
     messsage?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrderInput | SortOrder
-    _count?: LogsCountOrderByAggregateInput
-    _max?: LogsMaxOrderByAggregateInput
-    _min?: LogsMinOrderByAggregateInput
+    _count?: LogCountOrderByAggregateInput
+    _max?: LogMaxOrderByAggregateInput
+    _min?: LogMinOrderByAggregateInput
   }
 
-  export type LogsScalarWhereWithAggregatesInput = {
-    AND?: LogsScalarWhereWithAggregatesInput | LogsScalarWhereWithAggregatesInput[]
-    OR?: LogsScalarWhereWithAggregatesInput[]
-    NOT?: LogsScalarWhereWithAggregatesInput | LogsScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Logs"> | string
-    messsage?: StringWithAggregatesFilter<"Logs"> | string
-    userId?: StringWithAggregatesFilter<"Logs"> | string
-    createdAt?: DateTimeNullableWithAggregatesFilter<"Logs"> | Date | string | null
+  export type LogScalarWhereWithAggregatesInput = {
+    AND?: LogScalarWhereWithAggregatesInput | LogScalarWhereWithAggregatesInput[]
+    OR?: LogScalarWhereWithAggregatesInput[]
+    NOT?: LogScalarWhereWithAggregatesInput | LogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Log"> | string
+    messsage?: StringWithAggregatesFilter<"Log"> | string
+    userId?: StringWithAggregatesFilter<"Log"> | string
+    createdAt?: DateTimeNullableWithAggregatesFilter<"Log"> | Date | string | null
   }
 
   export type UserCreateInput = {
@@ -7313,9 +8462,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
-    logs?: LogsCreateNestedManyWithoutUserInput
     activationTokens?: ActivationTokenCreateNestedManyWithoutUserInput
     userDevices?: UserDeviceCreateNestedManyWithoutUserInput
+    twoFactorVerificationCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7327,9 +8476,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    logs?: LogsUncheckedCreateNestedManyWithoutUserInput
     activationTokens?: ActivationTokenUncheckedCreateNestedManyWithoutUserInput
     userDevices?: UserDeviceUncheckedCreateNestedManyWithoutUserInput
+    twoFactorVerificationCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -7341,9 +8490,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    logs?: LogsUpdateManyWithoutUserNestedInput
     activationTokens?: ActivationTokenUpdateManyWithoutUserNestedInput
     userDevices?: UserDeviceUpdateManyWithoutUserNestedInput
+    twoFactorVerificationCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7355,9 +8504,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    logs?: LogsUncheckedUpdateManyWithoutUserNestedInput
     activationTokens?: ActivationTokenUncheckedUpdateManyWithoutUserNestedInput
     userDevices?: UserDeviceUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorVerificationCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7467,6 +8616,61 @@ export namespace Prisma {
     ip?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
     isTrusted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwoFactorCodeCreateInput = {
+    id?: string
+    code: string
+    expiresIn?: Date | string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutTwoFactorVerificationCodesInput
+  }
+
+  export type TwoFactorCodeUncheckedCreateInput = {
+    id?: string
+    userId: string
+    code: string
+    expiresIn?: Date | string
+    createdAt?: Date | string
+  }
+
+  export type TwoFactorCodeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTwoFactorVerificationCodesNestedInput
+  }
+
+  export type TwoFactorCodeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwoFactorCodeCreateManyInput = {
+    id?: string
+    userId: string
+    code: string
+    expiresIn?: Date | string
+    createdAt?: Date | string
+  }
+
+  export type TwoFactorCodeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwoFactorCodeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7593,48 +8797,49 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type LogsCreateInput = {
-    id?: string
-    messsage: string
-    createdAt?: Date | string | null
-    user: UserCreateNestedOneWithoutLogsInput
-  }
-
-  export type LogsUncheckedCreateInput = {
+  export type LogCreateInput = {
     id?: string
     messsage: string
     userId: string
     createdAt?: Date | string | null
   }
 
-  export type LogsUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    messsage?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    user?: UserUpdateOneRequiredWithoutLogsNestedInput
+  export type LogUncheckedCreateInput = {
+    id?: string
+    messsage: string
+    userId: string
+    createdAt?: Date | string | null
   }
 
-  export type LogsUncheckedUpdateInput = {
+  export type LogUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     messsage?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type LogsCreateManyInput = {
+  export type LogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    messsage?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type LogCreateManyInput = {
     id?: string
     messsage: string
     userId: string
     createdAt?: Date | string | null
   }
 
-  export type LogsUpdateManyMutationInput = {
+  export type LogUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     messsage?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type LogsUncheckedUpdateManyInput = {
+  export type LogUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     messsage?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -7678,12 +8883,6 @@ export namespace Prisma {
     none?: SessionWhereInput
   }
 
-  export type LogsListRelationFilter = {
-    every?: LogsWhereInput
-    some?: LogsWhereInput
-    none?: LogsWhereInput
-  }
-
   export type ActivationTokenListRelationFilter = {
     every?: ActivationTokenWhereInput
     some?: ActivationTokenWhereInput
@@ -7696,11 +8895,13 @@ export namespace Prisma {
     none?: UserDeviceWhereInput
   }
 
-  export type SessionOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type TwoFactorCodeListRelationFilter = {
+    every?: TwoFactorCodeWhereInput
+    some?: TwoFactorCodeWhereInput
+    none?: TwoFactorCodeWhereInput
   }
 
-  export type LogsOrderByRelationAggregateInput = {
+  export type SessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -7709,6 +8910,10 @@ export namespace Prisma {
   }
 
   export type UserDeviceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TwoFactorCodeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -7825,6 +9030,30 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type TwoFactorCodeCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    code?: SortOrder
+    expiresIn?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TwoFactorCodeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    code?: SortOrder
+    expiresIn?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TwoFactorCodeMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    code?: SortOrder
+    expiresIn?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type ActivationTokenCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -7900,21 +9129,21 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type LogsCountOrderByAggregateInput = {
+  export type LogCountOrderByAggregateInput = {
     id?: SortOrder
     messsage?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type LogsMaxOrderByAggregateInput = {
+  export type LogMaxOrderByAggregateInput = {
     id?: SortOrder
     messsage?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type LogsMinOrderByAggregateInput = {
+  export type LogMinOrderByAggregateInput = {
     id?: SortOrder
     messsage?: SortOrder
     userId?: SortOrder
@@ -7942,13 +9171,6 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
-  export type LogsCreateNestedManyWithoutUserInput = {
-    create?: XOR<LogsCreateWithoutUserInput, LogsUncheckedCreateWithoutUserInput> | LogsCreateWithoutUserInput[] | LogsUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: LogsCreateOrConnectWithoutUserInput | LogsCreateOrConnectWithoutUserInput[]
-    createMany?: LogsCreateManyUserInputEnvelope
-    connect?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
-  }
-
   export type ActivationTokenCreateNestedManyWithoutUserInput = {
     create?: XOR<ActivationTokenCreateWithoutUserInput, ActivationTokenUncheckedCreateWithoutUserInput> | ActivationTokenCreateWithoutUserInput[] | ActivationTokenUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ActivationTokenCreateOrConnectWithoutUserInput | ActivationTokenCreateOrConnectWithoutUserInput[]
@@ -7963,18 +9185,18 @@ export namespace Prisma {
     connect?: UserDeviceWhereUniqueInput | UserDeviceWhereUniqueInput[]
   }
 
+  export type TwoFactorCodeCreateNestedManyWithoutUserInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput> | TwoFactorCodeCreateWithoutUserInput[] | TwoFactorCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutUserInput | TwoFactorCodeCreateOrConnectWithoutUserInput[]
+    createMany?: TwoFactorCodeCreateManyUserInputEnvelope
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
     createMany?: SessionCreateManyUserInputEnvelope
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-  }
-
-  export type LogsUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<LogsCreateWithoutUserInput, LogsUncheckedCreateWithoutUserInput> | LogsCreateWithoutUserInput[] | LogsUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: LogsCreateOrConnectWithoutUserInput | LogsCreateOrConnectWithoutUserInput[]
-    createMany?: LogsCreateManyUserInputEnvelope
-    connect?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
   }
 
   export type ActivationTokenUncheckedCreateNestedManyWithoutUserInput = {
@@ -7989,6 +9211,13 @@ export namespace Prisma {
     connectOrCreate?: UserDeviceCreateOrConnectWithoutUserInput | UserDeviceCreateOrConnectWithoutUserInput[]
     createMany?: UserDeviceCreateManyUserInputEnvelope
     connect?: UserDeviceWhereUniqueInput | UserDeviceWhereUniqueInput[]
+  }
+
+  export type TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput> | TwoFactorCodeCreateWithoutUserInput[] | TwoFactorCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutUserInput | TwoFactorCodeCreateOrConnectWithoutUserInput[]
+    createMany?: TwoFactorCodeCreateManyUserInputEnvelope
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -8015,20 +9244,6 @@ export namespace Prisma {
     update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
-  }
-
-  export type LogsUpdateManyWithoutUserNestedInput = {
-    create?: XOR<LogsCreateWithoutUserInput, LogsUncheckedCreateWithoutUserInput> | LogsCreateWithoutUserInput[] | LogsUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: LogsCreateOrConnectWithoutUserInput | LogsCreateOrConnectWithoutUserInput[]
-    upsert?: LogsUpsertWithWhereUniqueWithoutUserInput | LogsUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: LogsCreateManyUserInputEnvelope
-    set?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
-    disconnect?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
-    delete?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
-    connect?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
-    update?: LogsUpdateWithWhereUniqueWithoutUserInput | LogsUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: LogsUpdateManyWithWhereWithoutUserInput | LogsUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: LogsScalarWhereInput | LogsScalarWhereInput[]
   }
 
   export type ActivationTokenUpdateManyWithoutUserNestedInput = {
@@ -8059,6 +9274,20 @@ export namespace Prisma {
     deleteMany?: UserDeviceScalarWhereInput | UserDeviceScalarWhereInput[]
   }
 
+  export type TwoFactorCodeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput> | TwoFactorCodeCreateWithoutUserInput[] | TwoFactorCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutUserInput | TwoFactorCodeCreateOrConnectWithoutUserInput[]
+    upsert?: TwoFactorCodeUpsertWithWhereUniqueWithoutUserInput | TwoFactorCodeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TwoFactorCodeCreateManyUserInputEnvelope
+    set?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    disconnect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    delete?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    update?: TwoFactorCodeUpdateWithWhereUniqueWithoutUserInput | TwoFactorCodeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TwoFactorCodeUpdateManyWithWhereWithoutUserInput | TwoFactorCodeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TwoFactorCodeScalarWhereInput | TwoFactorCodeScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -8071,20 +9300,6 @@ export namespace Prisma {
     update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
-  }
-
-  export type LogsUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<LogsCreateWithoutUserInput, LogsUncheckedCreateWithoutUserInput> | LogsCreateWithoutUserInput[] | LogsUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: LogsCreateOrConnectWithoutUserInput | LogsCreateOrConnectWithoutUserInput[]
-    upsert?: LogsUpsertWithWhereUniqueWithoutUserInput | LogsUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: LogsCreateManyUserInputEnvelope
-    set?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
-    disconnect?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
-    delete?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
-    connect?: LogsWhereUniqueInput | LogsWhereUniqueInput[]
-    update?: LogsUpdateWithWhereUniqueWithoutUserInput | LogsUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: LogsUpdateManyWithWhereWithoutUserInput | LogsUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: LogsScalarWhereInput | LogsScalarWhereInput[]
   }
 
   export type ActivationTokenUncheckedUpdateManyWithoutUserNestedInput = {
@@ -8113,6 +9328,20 @@ export namespace Prisma {
     update?: UserDeviceUpdateWithWhereUniqueWithoutUserInput | UserDeviceUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserDeviceUpdateManyWithWhereWithoutUserInput | UserDeviceUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserDeviceScalarWhereInput | UserDeviceScalarWhereInput[]
+  }
+
+  export type TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput> | TwoFactorCodeCreateWithoutUserInput[] | TwoFactorCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TwoFactorCodeCreateOrConnectWithoutUserInput | TwoFactorCodeCreateOrConnectWithoutUserInput[]
+    upsert?: TwoFactorCodeUpsertWithWhereUniqueWithoutUserInput | TwoFactorCodeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TwoFactorCodeCreateManyUserInputEnvelope
+    set?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    disconnect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    delete?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    connect?: TwoFactorCodeWhereUniqueInput | TwoFactorCodeWhereUniqueInput[]
+    update?: TwoFactorCodeUpdateWithWhereUniqueWithoutUserInput | TwoFactorCodeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TwoFactorCodeUpdateManyWithWhereWithoutUserInput | TwoFactorCodeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TwoFactorCodeScalarWhereInput | TwoFactorCodeScalarWhereInput[]
   }
 
   export type SessionCreateNestedManyWithoutUserDeviceInput = {
@@ -8171,6 +9400,20 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
+  export type UserCreateNestedOneWithoutTwoFactorVerificationCodesInput = {
+    create?: XOR<UserCreateWithoutTwoFactorVerificationCodesInput, UserUncheckedCreateWithoutTwoFactorVerificationCodesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTwoFactorVerificationCodesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTwoFactorVerificationCodesNestedInput = {
+    create?: XOR<UserCreateWithoutTwoFactorVerificationCodesInput, UserUncheckedCreateWithoutTwoFactorVerificationCodesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTwoFactorVerificationCodesInput
+    upsert?: UserUpsertWithoutTwoFactorVerificationCodesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTwoFactorVerificationCodesInput, UserUpdateWithoutTwoFactorVerificationCodesInput>, UserUncheckedUpdateWithoutTwoFactorVerificationCodesInput>
+  }
+
   export type UserCreateNestedOneWithoutActivationTokensInput = {
     create?: XOR<UserCreateWithoutActivationTokensInput, UserUncheckedCreateWithoutActivationTokensInput>
     connectOrCreate?: UserCreateOrConnectWithoutActivationTokensInput
@@ -8213,22 +9456,8 @@ export namespace Prisma {
     update?: XOR<XOR<UserDeviceUpdateToOneWithWhereWithoutSessionsInput, UserDeviceUpdateWithoutSessionsInput>, UserDeviceUncheckedUpdateWithoutSessionsInput>
   }
 
-  export type UserCreateNestedOneWithoutLogsInput = {
-    create?: XOR<UserCreateWithoutLogsInput, UserUncheckedCreateWithoutLogsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutLogsInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
-  }
-
-  export type UserUpdateOneRequiredWithoutLogsNestedInput = {
-    create?: XOR<UserCreateWithoutLogsInput, UserUncheckedCreateWithoutLogsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutLogsInput
-    upsert?: UserUpsertWithoutLogsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLogsInput, UserUpdateWithoutLogsInput>, UserUncheckedUpdateWithoutLogsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -8375,28 +9604,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type LogsCreateWithoutUserInput = {
-    id?: string
-    messsage: string
-    createdAt?: Date | string | null
-  }
-
-  export type LogsUncheckedCreateWithoutUserInput = {
-    id?: string
-    messsage: string
-    createdAt?: Date | string | null
-  }
-
-  export type LogsCreateOrConnectWithoutUserInput = {
-    where: LogsWhereUniqueInput
-    create: XOR<LogsCreateWithoutUserInput, LogsUncheckedCreateWithoutUserInput>
-  }
-
-  export type LogsCreateManyUserInputEnvelope = {
-    data: LogsCreateManyUserInput | LogsCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
   export type ActivationTokenCreateWithoutUserInput = {
     id?: string
     token: string
@@ -8453,6 +9660,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TwoFactorCodeCreateWithoutUserInput = {
+    id?: string
+    code: string
+    expiresIn?: Date | string
+    createdAt?: Date | string
+  }
+
+  export type TwoFactorCodeUncheckedCreateWithoutUserInput = {
+    id?: string
+    code: string
+    expiresIn?: Date | string
+    createdAt?: Date | string
+  }
+
+  export type TwoFactorCodeCreateOrConnectWithoutUserInput = {
+    where: TwoFactorCodeWhereUniqueInput
+    create: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput>
+  }
+
+  export type TwoFactorCodeCreateManyUserInputEnvelope = {
+    data: TwoFactorCodeCreateManyUserInput | TwoFactorCodeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
     where: SessionWhereUniqueInput
     update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
@@ -8480,32 +9711,6 @@ export namespace Prisma {
     lastActivity?: DateTimeFilter<"Session"> | Date | string
     expiresIn?: DateTimeFilter<"Session"> | Date | string
     createdAt?: DateTimeFilter<"Session"> | Date | string
-  }
-
-  export type LogsUpsertWithWhereUniqueWithoutUserInput = {
-    where: LogsWhereUniqueInput
-    update: XOR<LogsUpdateWithoutUserInput, LogsUncheckedUpdateWithoutUserInput>
-    create: XOR<LogsCreateWithoutUserInput, LogsUncheckedCreateWithoutUserInput>
-  }
-
-  export type LogsUpdateWithWhereUniqueWithoutUserInput = {
-    where: LogsWhereUniqueInput
-    data: XOR<LogsUpdateWithoutUserInput, LogsUncheckedUpdateWithoutUserInput>
-  }
-
-  export type LogsUpdateManyWithWhereWithoutUserInput = {
-    where: LogsScalarWhereInput
-    data: XOR<LogsUpdateManyMutationInput, LogsUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type LogsScalarWhereInput = {
-    AND?: LogsScalarWhereInput | LogsScalarWhereInput[]
-    OR?: LogsScalarWhereInput[]
-    NOT?: LogsScalarWhereInput | LogsScalarWhereInput[]
-    id?: StringFilter<"Logs"> | string
-    messsage?: StringFilter<"Logs"> | string
-    userId?: StringFilter<"Logs"> | string
-    createdAt?: DateTimeNullableFilter<"Logs"> | Date | string | null
   }
 
   export type ActivationTokenUpsertWithWhereUniqueWithoutUserInput = {
@@ -8565,6 +9770,33 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"UserDevice"> | Date | string
   }
 
+  export type TwoFactorCodeUpsertWithWhereUniqueWithoutUserInput = {
+    where: TwoFactorCodeWhereUniqueInput
+    update: XOR<TwoFactorCodeUpdateWithoutUserInput, TwoFactorCodeUncheckedUpdateWithoutUserInput>
+    create: XOR<TwoFactorCodeCreateWithoutUserInput, TwoFactorCodeUncheckedCreateWithoutUserInput>
+  }
+
+  export type TwoFactorCodeUpdateWithWhereUniqueWithoutUserInput = {
+    where: TwoFactorCodeWhereUniqueInput
+    data: XOR<TwoFactorCodeUpdateWithoutUserInput, TwoFactorCodeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TwoFactorCodeUpdateManyWithWhereWithoutUserInput = {
+    where: TwoFactorCodeScalarWhereInput
+    data: XOR<TwoFactorCodeUpdateManyMutationInput, TwoFactorCodeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TwoFactorCodeScalarWhereInput = {
+    AND?: TwoFactorCodeScalarWhereInput | TwoFactorCodeScalarWhereInput[]
+    OR?: TwoFactorCodeScalarWhereInput[]
+    NOT?: TwoFactorCodeScalarWhereInput | TwoFactorCodeScalarWhereInput[]
+    id?: StringFilter<"TwoFactorCode"> | string
+    userId?: StringFilter<"TwoFactorCode"> | string
+    code?: StringFilter<"TwoFactorCode"> | string
+    expiresIn?: DateTimeFilter<"TwoFactorCode"> | Date | string
+    createdAt?: DateTimeFilter<"TwoFactorCode"> | Date | string
+  }
+
   export type SessionCreateWithoutUserDeviceInput = {
     id?: string
     token: string
@@ -8602,8 +9834,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
-    logs?: LogsCreateNestedManyWithoutUserInput
     activationTokens?: ActivationTokenCreateNestedManyWithoutUserInput
+    twoFactorVerificationCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserDevicesInput = {
@@ -8615,8 +9847,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    logs?: LogsUncheckedCreateNestedManyWithoutUserInput
     activationTokens?: ActivationTokenUncheckedCreateNestedManyWithoutUserInput
+    twoFactorVerificationCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserDevicesInput = {
@@ -8660,8 +9892,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    logs?: LogsUpdateManyWithoutUserNestedInput
     activationTokens?: ActivationTokenUpdateManyWithoutUserNestedInput
+    twoFactorVerificationCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserDevicesInput = {
@@ -8673,8 +9905,76 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    logs?: LogsUncheckedUpdateManyWithoutUserNestedInput
     activationTokens?: ActivationTokenUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorVerificationCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutTwoFactorVerificationCodesInput = {
+    id?: string
+    email: string
+    password: string
+    isActivated?: boolean
+    isAcceptedTerms?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    activationTokens?: ActivationTokenCreateNestedManyWithoutUserInput
+    userDevices?: UserDeviceCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTwoFactorVerificationCodesInput = {
+    id?: string
+    email: string
+    password: string
+    isActivated?: boolean
+    isAcceptedTerms?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    activationTokens?: ActivationTokenUncheckedCreateNestedManyWithoutUserInput
+    userDevices?: UserDeviceUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTwoFactorVerificationCodesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTwoFactorVerificationCodesInput, UserUncheckedCreateWithoutTwoFactorVerificationCodesInput>
+  }
+
+  export type UserUpsertWithoutTwoFactorVerificationCodesInput = {
+    update: XOR<UserUpdateWithoutTwoFactorVerificationCodesInput, UserUncheckedUpdateWithoutTwoFactorVerificationCodesInput>
+    create: XOR<UserCreateWithoutTwoFactorVerificationCodesInput, UserUncheckedCreateWithoutTwoFactorVerificationCodesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTwoFactorVerificationCodesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTwoFactorVerificationCodesInput, UserUncheckedUpdateWithoutTwoFactorVerificationCodesInput>
+  }
+
+  export type UserUpdateWithoutTwoFactorVerificationCodesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isActivated?: BoolFieldUpdateOperationsInput | boolean
+    isAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    activationTokens?: ActivationTokenUpdateManyWithoutUserNestedInput
+    userDevices?: UserDeviceUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTwoFactorVerificationCodesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isActivated?: BoolFieldUpdateOperationsInput | boolean
+    isAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    activationTokens?: ActivationTokenUncheckedUpdateManyWithoutUserNestedInput
+    userDevices?: UserDeviceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutActivationTokensInput = {
@@ -8686,8 +9986,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
-    logs?: LogsCreateNestedManyWithoutUserInput
     userDevices?: UserDeviceCreateNestedManyWithoutUserInput
+    twoFactorVerificationCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivationTokensInput = {
@@ -8699,8 +9999,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    logs?: LogsUncheckedCreateNestedManyWithoutUserInput
     userDevices?: UserDeviceUncheckedCreateNestedManyWithoutUserInput
+    twoFactorVerificationCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivationTokensInput = {
@@ -8728,8 +10028,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    logs?: LogsUpdateManyWithoutUserNestedInput
     userDevices?: UserDeviceUpdateManyWithoutUserNestedInput
+    twoFactorVerificationCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivationTokensInput = {
@@ -8741,8 +10041,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    logs?: LogsUncheckedUpdateManyWithoutUserNestedInput
     userDevices?: UserDeviceUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorVerificationCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -8753,9 +10053,9 @@ export namespace Prisma {
     isAcceptedTerms?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    logs?: LogsCreateNestedManyWithoutUserInput
     activationTokens?: ActivationTokenCreateNestedManyWithoutUserInput
     userDevices?: UserDeviceCreateNestedManyWithoutUserInput
+    twoFactorVerificationCodes?: TwoFactorCodeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -8766,9 +10066,9 @@ export namespace Prisma {
     isAcceptedTerms?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    logs?: LogsUncheckedCreateNestedManyWithoutUserInput
     activationTokens?: ActivationTokenUncheckedCreateNestedManyWithoutUserInput
     userDevices?: UserDeviceUncheckedCreateNestedManyWithoutUserInput
+    twoFactorVerificationCodes?: TwoFactorCodeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -8822,9 +10122,9 @@ export namespace Prisma {
     isAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    logs?: LogsUpdateManyWithoutUserNestedInput
     activationTokens?: ActivationTokenUpdateManyWithoutUserNestedInput
     userDevices?: UserDeviceUpdateManyWithoutUserNestedInput
+    twoFactorVerificationCodes?: TwoFactorCodeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -8835,9 +10135,9 @@ export namespace Prisma {
     isAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    logs?: LogsUncheckedUpdateManyWithoutUserNestedInput
     activationTokens?: ActivationTokenUncheckedUpdateManyWithoutUserNestedInput
     userDevices?: UserDeviceUncheckedUpdateManyWithoutUserNestedInput
+    twoFactorVerificationCodes?: TwoFactorCodeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserDeviceUpsertWithoutSessionsInput = {
@@ -8873,74 +10173,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateWithoutLogsInput = {
-    id?: string
-    email: string
-    password: string
-    isActivated?: boolean
-    isAcceptedTerms?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    activationTokens?: ActivationTokenCreateNestedManyWithoutUserInput
-    userDevices?: UserDeviceCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutLogsInput = {
-    id?: string
-    email: string
-    password: string
-    isActivated?: boolean
-    isAcceptedTerms?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    activationTokens?: ActivationTokenUncheckedCreateNestedManyWithoutUserInput
-    userDevices?: UserDeviceUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutLogsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutLogsInput, UserUncheckedCreateWithoutLogsInput>
-  }
-
-  export type UserUpsertWithoutLogsInput = {
-    update: XOR<UserUpdateWithoutLogsInput, UserUncheckedUpdateWithoutLogsInput>
-    create: XOR<UserCreateWithoutLogsInput, UserUncheckedCreateWithoutLogsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutLogsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutLogsInput, UserUncheckedUpdateWithoutLogsInput>
-  }
-
-  export type UserUpdateWithoutLogsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isActivated?: BoolFieldUpdateOperationsInput | boolean
-    isAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    activationTokens?: ActivationTokenUpdateManyWithoutUserNestedInput
-    userDevices?: UserDeviceUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutLogsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isActivated?: BoolFieldUpdateOperationsInput | boolean
-    isAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    activationTokens?: ActivationTokenUncheckedUpdateManyWithoutUserNestedInput
-    userDevices?: UserDeviceUncheckedUpdateManyWithoutUserNestedInput
-  }
-
   export type SessionCreateManyUserInput = {
     id?: string
     token: string
@@ -8948,12 +10180,6 @@ export namespace Prisma {
     lastActivity?: Date | string
     expiresIn?: Date | string
     createdAt?: Date | string
-  }
-
-  export type LogsCreateManyUserInput = {
-    id?: string
-    messsage: string
-    createdAt?: Date | string | null
   }
 
   export type ActivationTokenCreateManyUserInput = {
@@ -8970,6 +10196,13 @@ export namespace Prisma {
     ip: string
     userAgent: string
     isTrusted?: boolean
+    createdAt?: Date | string
+  }
+
+  export type TwoFactorCodeCreateManyUserInput = {
+    id?: string
+    code: string
+    expiresIn?: Date | string
     createdAt?: Date | string
   }
 
@@ -8998,24 +10231,6 @@ export namespace Prisma {
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type LogsUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    messsage?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type LogsUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    messsage?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type LogsUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    messsage?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ActivationTokenUpdateWithoutUserInput = {
@@ -9068,6 +10283,27 @@ export namespace Prisma {
     ip?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
     isTrusted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwoFactorCodeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwoFactorCodeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwoFactorCodeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

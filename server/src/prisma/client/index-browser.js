@@ -138,6 +138,14 @@ exports.Prisma.UserDeviceScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.TwoFactorCodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  code: 'code',
+  expiresIn: 'expiresIn',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.ActivationTokenScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -156,7 +164,7 @@ exports.Prisma.SessionScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.LogsScalarFieldEnum = {
+exports.Prisma.LogScalarFieldEnum = {
   id: 'id',
   messsage: 'messsage',
   userId: 'userId',
@@ -182,9 +190,10 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   User: 'User',
   UserDevice: 'UserDevice',
+  TwoFactorCode: 'TwoFactorCode',
   ActivationToken: 'ActivationToken',
   Session: 'Session',
-  Logs: 'Logs'
+  Log: 'Log'
 };
 
 /**

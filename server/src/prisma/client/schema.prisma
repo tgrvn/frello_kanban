@@ -10,17 +10,17 @@ generator client {
 }
 
 model User {
-  id               String            @id @unique @default(uuid())
-  email            String            @unique
-  password         String
-  isActivated      Boolean           @default(false) @map("is_activated")
-  isAcceptedTerms  Boolean           @default(false) @map("is_accepted_terms")
-  createdAt        DateTime          @default(now()) @map("created_at")
-  updatedAt        DateTime          @default(now()) @map("updated_at")
-  sessions         Session[]
-  logs             Logs[]
-  activationTokens ActivationToken[]
-  userDevices      UserDevice[]
+  id                         String            @id @unique @default(uuid())
+  email                      String            @unique
+  password                   String
+  isActivated                Boolean           @default(false) @map("is_activated")
+  isAcceptedTerms            Boolean           @default(false) @map("is_accepted_terms")
+  createdAt                  DateTime          @default(now()) @map("created_at")
+  updatedAt                  DateTime          @default(now()) @map("updated_at")
+  sessions                   Session[]
+  activationTokens           ActivationToken[]
+  userDevices                UserDevice[]
+  twoFactorVerificationCodes TwoFactorCode[]
 
   @@map("users")
 }
@@ -40,6 +40,18 @@ model UserDevice {
 
   @@unique([userId, deviceId], name: "user_device_pair")
   @@map("user_devices")
+}
+
+model TwoFactorCode {
+  id        String   @id @default(uuid())
+  userId    String
+  code      String
+  expiresIn DateTime @default(now()) @map("expires_in")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("two_factor_codes")
 }
 
 model ActivationToken {
@@ -69,13 +81,11 @@ model Session {
   @@map("sessions")
 }
 
-model Logs {
+model Log {
   id        String    @id @unique @default(uuid())
   messsage  String
   userId    String    @map("user_id")
   createdAt DateTime? @default(now()) @map("created_at")
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("logs")
 }

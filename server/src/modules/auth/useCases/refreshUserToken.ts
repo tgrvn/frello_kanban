@@ -13,7 +13,7 @@ export const refreshUserToken = async ({token, ip, userAgent, fingerprint, devic
     const payload = SessionService.verifyRefreshToken(session.token);
     const user = await UserService.validateOrThrow(payload.email);
 
-    const device = await UserDeviceService.findAndUpdate({ip, fingerprint, deviceId, userAgent, userId: user.id})
+    const device = await UserDeviceService.findAndUpdate({ip, fingerprint, deviceId, userAgent, userId: user.id});
 
     const tokens = SessionService.generateTokens(user);
     const newSession = await SessionService.create({userId: user.id, token, userDeviceId: device.id});
