@@ -1,11 +1,15 @@
 import {Request, Response, NextFunction} from "express";
-import SuccessResponse from "@/response/SuccessResponse";
 import {COOKIE_CONFIG, IP, UA} from "@/shared/utils/constants";
 import SessionRepository from "@/modules/auth/repositories/SessionRepository";
 import {refreshUserToken} from "@/modules/auth/useCases/refreshUserToken";
 import {registerUser} from "@/modules/auth/useCases/registerUser";
 import {loginUser} from "@/modules/auth/useCases/loginUser";
 import {activateUser} from "@/modules/auth/useCases/activateUser";
+import ActivationTokenService from "@/modules/auth/services/ActivationTokenService";
+import MailService from "@/mailer/MailService";
+import HttpError from "@/response/HttpError";
+import {sendActivationEmail} from "@/modules/auth/useCases/sendActivationEmail";
+import {UserDTO} from "@/prisma/types";
 
 class AuthController {
     async login(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -79,6 +83,18 @@ class AuthController {
             next(err);
         }
     }
+
+    async sendActivationEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const user = req.user as UserDTO;
+            await sendActivationEmail(user);
+
+            res.success("activation email sent");
+        } catch (err) {
+            next(err);
+        }
+    }
+
 
     async activate(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {

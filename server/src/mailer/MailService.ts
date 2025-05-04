@@ -2,6 +2,7 @@ import nodemailer, {SendMailOptions, Transporter} from "nodemailer";
 import {MAIL_HOST, MAIL_PORT} from "@/shared/utils/constants";
 import hbs from "nodemailer-express-handlebars";
 import path from "path";
+import HttpError from "@/response/HttpError";
 
 class MailService {
     private readonly transporter: Transporter;
@@ -28,18 +29,42 @@ class MailService {
         );
     }
 
-    async sendActivationEmail(to: string, activationLink: string) {
-        const message = await this.transporter.sendMail({
-            from: this.from,
-            to,
-            subject: "Activation Email",
-            template: "activation",
-            context: {
-                activationLink,
-            },
-        } as SendMailOptions);
+    async sendActivationEmail(to: string, activationLink: string): Promise<void> {
+        try {
+            const message = await this.transporter.sendMail({
+                from: this.from,
+                to,
+                subject: "Activation Email",
+                template: "activation",
+                context: {
+                    activationLink,
+                },
+            } as SendMailOptions);
 
-        console.log(message);
+            console.log(message);
+        } catch (err) {
+            throw HttpError.iternalServerError("failed to send activation email");
+        }
+    }
+
+    async sendTwoFactorCode(to: string, code: string): Promise<void> {
+        try {
+            const message = await this.transporter.sendMail({
+                from: this.from,
+                to,
+                subject: "Two Factor Code",
+                template: "twoFactor",
+                context: {
+                    code
+                }
+            } as SendMailOptions);
+
+            console.log(message);
+        } catch (err) {
+            throw HttpError.iternalServerError("failed to send 2FA code");
+        }
+
+
     }
 }
 
