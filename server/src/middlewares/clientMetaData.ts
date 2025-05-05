@@ -8,6 +8,7 @@ const clientMetaData = (req: Request, res: Response, next: NextFunction) => {
     const fingerprint = String(req.headers['x-fingerprint'] || '1234567890');
 
     req.clientMetaData = {ip, userAgent, deviceId, fingerprint};
+    next();
 }
 
 export default clientMetaData;
