@@ -7,6 +7,7 @@ import cors from "cors";
 import errorHandler from "@/middlewares/errorHandler";
 import helmet from "helmet";
 import successResponse from "@/middlewares/successResponse";
+import clientMetaData from "@/middlewares/clientMetaData";
 
 const PORT = process.env.PORT || 3000;
 
@@ -22,7 +23,9 @@ app.use(cors({
 app.use(requestIp.mw());
 app.use(cookieParser());
 
+app.use(clientMetaData);
 app.use(successResponse);
+
 app.use('/api', router);
 
 app.use(errorHandler);

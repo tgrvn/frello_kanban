@@ -3,8 +3,11 @@ import SessionService, {ITokensPair} from "@/modules/auth/services/SessionServic
 import UserService from "@/modules/users/UserService";
 import SessionRepository from "@/modules/auth/repositories/SessionRepository";
 import UserDeviceService from "@/modules/auth/services/UserDeviceService";
+import {IClientMetaData} from "@/types/express";
 
-export const refreshUserToken = async ({token, ip, userAgent, fingerprint, deviceId}: any): Promise<{
+export const refreshUserToken = async ({token, ip, userAgent, fingerprint, deviceId}: IClientMetaData & {
+    token: string
+}): Promise<{
     user: UserDTO;
 } & ITokensPair> => {
     const session = await SessionService.findOrThrowUnique(token);

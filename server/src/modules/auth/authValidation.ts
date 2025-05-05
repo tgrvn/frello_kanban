@@ -1,5 +1,6 @@
 import {z} from "zod";
 import UserRepository from "@/modules/users/UserRepository";
+import {IClientMetaData} from "@/types/express";
 
 export const loginSchema = z.object({
     email: z.string().email(),
@@ -19,9 +20,4 @@ export const registrationSchema = z.object({
 });
 
 export type LoginData = z.infer<typeof loginSchema>
-export interface IAuthData extends LoginData {
-    ip: string;
-    userAgent: string;
-    deviceId: string;
-    fingerprint: string;
-}
+export interface IAuthData extends LoginData, IClientMetaData {}
