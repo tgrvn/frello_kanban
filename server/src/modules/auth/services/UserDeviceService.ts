@@ -18,15 +18,13 @@ class UserDeviceService {
         const device = await UserDeviceRepository.findUnique(userId, deviceId);
         if (!device) throw HttpError.twoFactorRequired();
 
-        const isSuspiciousAttempt = this.isSuspiciousDevice(device, {
+        this.isSuspiciousDevice(device, {
             ip,
             fingerprint,
             deviceId,
             userAgent
         });
-        if (isSuspiciousAttempt) throw HttpError.twoFactorRequired();
-
-
+        
         return UserDeviceRepository.update(device.id, {userAgent, ip, fingerprint});
     }
 
@@ -39,6 +37,8 @@ class UserDeviceService {
 
         if (userAgent !== device.userAgent) trustScore += 1;
         if (ip !== device.ip) trustScore += 1;
+
+        if (trustScore >= 3) throw HttpError.twoFactorRequired();
 
         return trustScore >= 3;
     }
