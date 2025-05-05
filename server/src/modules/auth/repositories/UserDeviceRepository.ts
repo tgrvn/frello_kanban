@@ -2,10 +2,16 @@ import prisma from "@/prisma/prisma";
 import {Prisma, UserDevice} from "@/prisma/client";
 import UserDeviceUpdateInput = Prisma.UserDeviceUpdateInput;
 import UserDeviceCreateInput = Prisma.UserDeviceCreateInput;
+import UserDeviceFindUniqueArgs = Prisma.UserDeviceFindUniqueArgs;
+import UserDeviceWhereUniqueInput = Prisma.UserDeviceWhereUniqueInput;
 
 class UserDeviceRepository {
-    async findUnique(userId: string, deviceId: string) {
+    async findUniqueByPair(userId: string, deviceId: string) {
         return prisma.userDevice.findUnique({where: {user_device_pair: {userId, deviceId}}})
+    }
+
+    async updateByPair(userId: string, deviceId: string, data: UserDeviceUpdateInput) {
+        return prisma.userDevice.update({data, where: {user_device_pair: {userId, deviceId}}})
     }
 
     async create(data: UserDeviceCreateInput): Promise<UserDevice> {

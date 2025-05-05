@@ -1,4 +1,4 @@
-import {Prisma, UserDevice} from "@/prisma/client";
+import {UserDevice} from "@/prisma/client";
 import {CreateUserDeviceDTO, DeviceCheckDTO} from "@/prisma/types";
 import UserDeviceRepository from "@/modules/auth/repositories/UserDeviceRepository";
 import HttpError from "@/response/HttpError";
@@ -14,8 +14,12 @@ class UserDeviceService {
         });
     }
 
+    async makeDeviceTrusted(deviceId: string, userId: string): Promise<void> {
+        await UserDeviceRepository.updateByPair(userId, deviceId, {isTrusted: true});
+    }
+
     async findAndUpdate({ip, fingerprint, deviceId, userAgent, userId}: CreateUserDeviceDTO): Promise<UserDevice> {
-        const device = await UserDeviceRepository.findUnique(userId, deviceId);
+        const device = await UserDeviceRepository.findUniqueByPair(userId, deviceId);
         if (!device) throw HttpError.twoFactorRequired();
 
         this.isSuspiciousDevice(device, {
@@ -24,12 +28,12 @@ class UserDeviceService {
             deviceId,
             userAgent
         });
-        
+
         return UserDeviceRepository.update(device.id, {userAgent, ip, fingerprint});
     }
 
-    isSuspiciousDevice(device: UserDevice | null, {ip, deviceId, userAgent, fingerprint}: DeviceCheckDTO): boolean {
-        if (!device) return false;
+    isSuspiciousDevice(device: UserDevice | null, {ip, deviceId, userAgent, fingerprint}: DeviceCheckDTO): void {
+        if (!device) throw HttpError.twoFactorRequired();
         let trustScore = 0;
 
         if (fingerprint !== device.fingerprint) trustScore += 3;
@@ -39,8 +43,6 @@ class UserDeviceService {
         if (ip !== device.ip) trustScore += 1;
 
         if (trustScore >= 3) throw HttpError.twoFactorRequired();
-
-        return trustScore >= 3;
     }
 }
 

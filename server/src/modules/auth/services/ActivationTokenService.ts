@@ -19,9 +19,9 @@ class ActivationTokenService {
         return jwt.sign({id: payload}, JWT_ACTIVATION_SECRET, {expiresIn: '15m'});
     }
 
-    verifyActivationToken(token: string) {
+    verifyActivationToken(token: string): UserDTO {
         try {
-            const payload = jwt.verify(token, JWT_ACTIVATION_SECRET) as Pick<UserDTO, 'id'>;
+            const payload = jwt.verify(token, JWT_ACTIVATION_SECRET) as UserDTO;
 
             if (!payload || !payload?.id) throw HttpError.unauthenticated();
 
