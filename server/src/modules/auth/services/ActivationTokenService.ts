@@ -6,8 +6,8 @@ import HttpError from "@/response/HttpError";
 import {UserDTO} from "@/prisma/types";
 
 class ActivationTokenService {
-    async create(userId: string): Promise<string> {
-        const token = this.generateActivationToken(userId);
+    async create(userId: string, deviceId: string): Promise<string> {
+        const token = this.generateActivationToken(userId, deviceId);
         const expiresIn = todayPlus.minutes(15);
 
         const activationLink = await ActivationLinkRepository.create({userId, token, expiresIn});
@@ -15,13 +15,13 @@ class ActivationTokenService {
         return activationLink.token;
     }
 
-    generateActivationToken(payload: string): string {
-        return jwt.sign({id: payload}, JWT_ACTIVATION_SECRET, {expiresIn: '15m'});
+    generateActivationToken(userId: string, deviceId: string): string {
+        return jwt.sign({id: {userId, deviceId}}, JWT_ACTIVATION_SECRET, {expiresIn: '15m'});
     }
 
-    verifyActivationToken(token: string): UserDTO {
+    verifyActivationToken(token: string): UserDTO & { deviceId: string } {
         try {
-            const payload = jwt.verify(token, JWT_ACTIVATION_SECRET) as UserDTO;
+            const payload = jwt.verify(token, JWT_ACTIVATION_SECRET) as UserDTO & { deviceId: string };
 
             if (!payload || !payload?.id) throw HttpError.unauthenticated();
 

@@ -4,10 +4,9 @@ import ActivationTokenRepository from "@/modules/auth/repositories/ActivationTok
 import {IClientMetaData} from "@/types/express";
 import UserDeviceService from "@/modules/auth/services/UserDeviceService";
 
-export const activateUser = async ({token, deviceId}: { token: string } & IClientMetaData): Promise<void> => {
+export const activateUser = async ({token}: { token: string } & IClientMetaData): Promise<void> => {
     const payload = ActivationTokenService.verifyActivationToken(token);
     await UserService.activate(payload.id);
     await ActivationTokenRepository.delete(token);
-
-    await UserDeviceService.makeDeviceTrusted(deviceId, payload.id);
+    await UserDeviceService.makeDeviceTrusted(payload.id, payload.deviceId);
 }

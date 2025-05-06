@@ -7,7 +7,6 @@ import {loginUser} from "@/modules/auth/useCases/loginUser";
 import {activateUser} from "@/modules/auth/useCases/activateUser";
 import {sendActivationEmail} from "@/modules/auth/useCases/sendActivationEmail";
 import {UserDTO} from "@/prisma/types";
-import TwoFactorCodeService from "@/modules/auth/services/TwoFactorCodeService";
 
 class AuthController {
     async login(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -77,7 +76,7 @@ class AuthController {
     async sendActivationEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const user = req.user as UserDTO;
-            await sendActivationEmail(user);
+            await sendActivationEmail(user, req.clientMetaData.deviceId);
 
             res.success("activation email sent");
         } catch (err) {

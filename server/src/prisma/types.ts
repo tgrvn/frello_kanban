@@ -10,5 +10,5 @@ export type CreateSessionDTO = Pick<Session, "userId" | "token" | "userDeviceId"
 export type CreateActivationTokenDTO = Pick<ActivationToken, "userId" | "token" | "expiresIn">;
 
 //device
-export type CreateUserDeviceDTO = Omit<UserDevice, "id" | "createdAt" | "isTrusted">;
+export type CreateUserDeviceDTO = Omit<UserDevice, "id" | "createdAt" | "isTrusted" | "lastActivity">;
 export type DeviceCheckDTO = Pick<UserDevice, "ip" | "deviceId" | "userAgent" | "fingerprint">

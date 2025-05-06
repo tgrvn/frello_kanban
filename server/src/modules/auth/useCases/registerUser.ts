@@ -22,7 +22,7 @@ export const registerUser = async ({email, password, ip, userAgent, fingerprint,
 
     //const url = FRONTEND_URL + '/activate/' + activationToken;
     //for test:
-    const activationToken = await ActivationTokenService.create(user.id);
+    const activationToken = await ActivationTokenService.create(user.id, device.deviceId);
     const url = 'http://localhost:3000/api/auth/activate/' + activationToken;
     await MailService.sendActivationEmail(user.email, url);
 
