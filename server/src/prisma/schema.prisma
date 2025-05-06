@@ -26,15 +26,16 @@ model User {
 }
 
 model UserDevice {
-  id          String    @id @unique @default(uuid())
-  userId      String    @map("user_id")
-  deviceId    String    @default(uuid())
-  fingerprint String
-  ip          String
-  userAgent   String
-  isTrusted   Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  sessions    Session[]
+  id           String    @id @unique @default(uuid())
+  userId       String    @map("user_id")
+  deviceId     String    @default(uuid())
+  fingerprint  String
+  ip           String
+  userAgent    String
+  isTrusted    Boolean   @default(false)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  lastActivity DateTime  @default(now()) @map("last_activity")
+  sessions     Session[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
