@@ -1,7 +1,6 @@
 import {UserDevice} from "@/prisma/client";
 import {CreateUserDeviceDTO, DeviceCheckDTO} from "@/prisma/types";
 import UserDeviceRepository from "@/modules/auth/repositories/UserDeviceRepository";
-import HttpError from "@/response/HttpError";
 
 class UserDeviceService {
     async create({userId, ip, userAgent, fingerprint, deviceId}: CreateUserDeviceDTO): Promise<UserDevice> {
@@ -18,31 +17,48 @@ class UserDeviceService {
         await UserDeviceRepository.updateByPair(userId, deviceId, {isTrusted: true});
     }
 
-    async findAndUpdate({ip, fingerprint, deviceId, userAgent, userId}: CreateUserDeviceDTO): Promise<UserDevice> {
+    async verifyAndUpdateDeviceMeta(
+        {
+            ip,
+            fingerprint,
+            deviceId,
+            userAgent,
+            userId
+        }: CreateUserDeviceDTO,
+        onFailure: () => Promise<never>
+    ): Promise<UserDevice> {
         const device = await UserDeviceRepository.findUniqueByPair(userId, deviceId);
-        if (!device) throw HttpError.twoFactorRequired();
+        const now = new Date(Date.now());
 
-        this.isSuspiciousDevice(device, {
+        if (!device) {
+            return await onFailure();
+        }
+
+        const isSuspicious = this.isSuspiciousDevice(device, {
             ip,
             fingerprint,
             deviceId,
             userAgent
         });
 
-        return UserDeviceRepository.update(device.id, {userAgent, ip, fingerprint});
+        if (isSuspicious) {
+            return await onFailure();
+        }
+
+        return UserDeviceRepository.update(device.id, {userAgent, ip, fingerprint, lastActivity: now});
     }
 
-    isSuspiciousDevice(device: UserDevice | null, {ip, deviceId, userAgent, fingerprint}: DeviceCheckDTO): void {
-        if (!device) throw HttpError.twoFactorRequired();
-        let trustScore = 0;
+    isSuspiciousDevice(device: UserDevice, {ip, deviceId, userAgent, fingerprint}: DeviceCheckDTO): boolean {
+        let fraudScore = 0;
 
-        if (fingerprint !== device.fingerprint) trustScore += 3;
-        if (device.deviceId !== deviceId) trustScore += 2;
+        if (!device.isTrusted) return true;
+        if (fingerprint !== device.fingerprint) fraudScore += 3;
+        if (device.deviceId !== deviceId) fraudScore += 2;
 
-        if (userAgent !== device.userAgent) trustScore += 1;
-        if (ip !== device.ip) trustScore += 1;
+        if (userAgent !== device.userAgent) fraudScore += 1;
+        if (ip !== device.ip) fraudScore += 1;
 
-        if (trustScore >= 3) throw HttpError.twoFactorRequired();
+        return fraudScore >= 3;
     }
 }
 

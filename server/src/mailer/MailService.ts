@@ -47,6 +47,24 @@ class MailService {
         }
     }
 
+    async sendSuspiciousAttemptEmail(to: string, ip: string, userAgent: string, timestamp: string): Promise<void> {
+        try {
+            const message = await this.transporter.sendMail({
+                from: this.from,
+                to,
+                subject: "Suspicious Login Activity",
+                template: "suspiciousAttempt",
+                context: {
+                    userAgent, timestamp, ip
+                }
+            } as SendMailOptions);
+
+            console.log(message);
+        } catch (err) {
+            throw HttpError.iternalServerError("failed to send suspicious attempt email");
+        }
+    }
+
     async sendTwoFactorCode(to: string, code: string): Promise<void> {
         try {
             const message = await this.transporter.sendMail({
