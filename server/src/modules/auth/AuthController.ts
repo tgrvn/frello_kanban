@@ -7,6 +7,7 @@ import {loginUser} from "@/modules/auth/useCases/loginUser";
 import {activateUser} from "@/modules/auth/useCases/activateUser";
 import {sendActivationEmail} from "@/modules/auth/useCases/sendActivationEmail";
 import {UserDTO} from "@/prisma/types";
+import TwoFactorCodeService from "@/modules/auth/services/TwoFactorCodeService";
 
 class AuthController {
     async login(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -83,7 +84,6 @@ class AuthController {
             next(err);
         }
     }
-
 
     async activate(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {

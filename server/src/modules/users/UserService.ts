@@ -6,8 +6,8 @@ import HttpError from "@/response/HttpError";
 import UserCreateInput = Prisma.UserCreateInput;
 
 class UserService {
-    async validateOrThrow(email: string, password?: string): Promise<UserDTO> {
-        const user = await UserRepository.findUnique({email});
+    async verifyCredentials(email: string, password?: string): Promise<UserDTO> {
+        const user = await UserRepository.findUniqueByEmail(email);
         if (!user) throw HttpError.unauthenticated("invalid credentials");
 
         if (password) {

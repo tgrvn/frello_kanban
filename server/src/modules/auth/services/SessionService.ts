@@ -13,21 +13,18 @@ export interface ITokensPair {
 }
 
 class SessionService {
-    async findOrThrowUnique(token: string): Promise<Session> {
-        const session = await SessionRepository.findUnique({token});
+    async findOrFail(token: string): Promise<Session> {
+        const session = await SessionRepository.findUniqueByToken(token);
         if (!session) throw HttpError.unauthenticated();
         return session;
     }
 
     async create({userId, token, userDeviceId}: CreateSessionDTO): Promise<Session> {
         const expiresIn = todayPlus.days(REFRESH_MAX_AGE);
-        const sessionsCount = await SessionRepository.countUserSessions(userId);
+        const sessionsCount = await SessionRepository.countUserSessions(userId, userDeviceId);
 
         if (sessionsCount >= 5) {
-            const oldestSession = await prisma.session.findFirst({
-                where: {userId},
-                orderBy: {createdAt: 'asc'}
-            });
+            const oldestSession = await SessionRepository.findFirstOldestSessionByDevice(userId, userDeviceId);
 
             if (oldestSession) await SessionRepository.deleteByToken(oldestSession.token);
         }

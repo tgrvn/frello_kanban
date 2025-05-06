@@ -27,7 +27,7 @@ export const registerUser = async ({email, password, ip, userAgent, fingerprint,
     await MailService.sendActivationEmail(user.email, url);
 
     const tokens = SessionService.generateTokens(user);
-    const session = await SessionService.create({userId: user.id, userDeviceId: device.id, token: tokens.refreshToken}); //+device
+    const session = await SessionService.create({userId: user.id, userDeviceId: device.id, token: tokens.refreshToken});
 
     return {user, refreshToken: session.token, accessToken: tokens.accessToken};
 };

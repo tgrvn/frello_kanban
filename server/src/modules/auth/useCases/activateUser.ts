@@ -8,5 +8,6 @@ export const activateUser = async ({token, deviceId}: { token: string } & IClien
     const payload = ActivationTokenService.verifyActivationToken(token);
     await UserService.activate(payload.id);
     await ActivationTokenRepository.delete(token);
+
     await UserDeviceService.makeDeviceTrusted(deviceId, payload.id);
 }

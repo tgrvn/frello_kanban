@@ -15,8 +15,8 @@ class UserRepository {
         return prisma.user.update({where: {id}, data});
     }
 
-    async findUnique(params: UserWhereUniqueInput): Promise<User | null> {
-        return prisma.user.findUnique({where: params});
+    async findUniqueByEmail(email: string): Promise<User | null> {
+        return prisma.user.findUnique({where: {email}});
     }
 
     async isEmailExists(email: string): Promise<boolean> {

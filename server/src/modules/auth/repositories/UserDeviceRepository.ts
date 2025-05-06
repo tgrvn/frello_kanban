@@ -2,8 +2,6 @@ import prisma from "@/prisma/prisma";
 import {Prisma, UserDevice} from "@/prisma/client";
 import UserDeviceUpdateInput = Prisma.UserDeviceUpdateInput;
 import UserDeviceCreateInput = Prisma.UserDeviceCreateInput;
-import UserDeviceFindUniqueArgs = Prisma.UserDeviceFindUniqueArgs;
-import UserDeviceWhereUniqueInput = Prisma.UserDeviceWhereUniqueInput;
 
 class UserDeviceRepository {
     async findUniqueByPair(userId: string, deviceId: string) {
