@@ -1,22 +1,21 @@
 import {Request, Response, NextFunction} from "express";
-import {COOKIE_CONFIG, IP, UA} from "@/shared/utils/constants";
+import {COOKIE_CONFIG} from "@/shared/utils/constants";
 import SessionRepository from "@/modules/auth/repositories/SessionRepository";
 import {refreshUserToken} from "@/modules/auth/useCases/refreshUserToken";
 import {registerUser} from "@/modules/auth/useCases/registerUser";
 import {loginUser} from "@/modules/auth/useCases/loginUser";
 import {activateUser} from "@/modules/auth/useCases/activateUser";
-import {sendActivationEmail} from "@/modules/auth/useCases/sendActivationEmail";
 import {UserDTO} from "@/prisma/types";
+import MailService from "@/mailer/MailService";
+import ActivationTokenService from "@/modules/auth/services/ActivationTokenService";
+import {verifyTwoFactorCode} from "@/modules/auth/useCases/verifyTwoFactorCode";
 
 class AuthController {
     async login(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const ip = req.clientIp || IP;
-            const userAgent = req.get('User-Agent') || UA;
-            const deviceId = req.headers['x-device-id'] || 'abc123';
-            const fingerprint = req.headers['x-fingerprint'] || '1234567890';
-
-            const userData = await loginUser({ip, userAgent, deviceId, fingerprint, ...req.body});
+            const userData = await loginUser({
+                ...req.body, ...req.clientMetaData
+            });
             res.cookie(COOKIE_CONFIG.name, userData.refreshToken, COOKIE_CONFIG.options);
 
             res.success("welcome", {
@@ -24,7 +23,6 @@ class AuthController {
                 accessToken: userData.accessToken
             });
         } catch (err) {
-            res.clearCookie(COOKIE_CONFIG.name);
             next(err);
         }
     }
@@ -36,7 +34,6 @@ class AuthController {
 
             res.success("welcome", {user: userData.user, accessToken: userData.accessToken});
         } catch (err) {
-            res.clearCookie(COOKIE_CONFIG.name);
             next(err);
         }
     }
@@ -54,7 +51,6 @@ class AuthController {
                 accessToken: sessionData.accessToken
             });
         } catch (err) {
-            res.clearCookie(COOKIE_CONFIG.name);
             next(err);
         }
     }
@@ -68,7 +64,6 @@ class AuthController {
 
             res.success("success logout");
         } catch (err) {
-            res.clearCookie(COOKIE_CONFIG.name);
             next(err);
         }
     }
@@ -76,7 +71,9 @@ class AuthController {
     async sendActivationEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const user = req.user as UserDTO;
-            await sendActivationEmail(user, req.clientMetaData.deviceId);
+
+            const token = await ActivationTokenService.create(user.id, req.clientMetaData.deviceId);
+            await MailService.sendActivationEmail(user.email, token);
 
             res.success("activation email sent");
         } catch (err) {
@@ -91,7 +88,36 @@ class AuthController {
 
             res.success("user activated");
         } catch (err) {
-            res.clearCookie(COOKIE_CONFIG.name);
+            next(err);
+        }
+    }
+
+    // async generateTwoFactorCode(req: Request, res: Response, next: NextFunction): Promise<void> {
+    //     try {
+    //         const user = req.user as UserDTO;
+    //
+    //         const twoFactorData = await TwoFactorCodeService.generate(user.id, req.clientMetaData);
+    //         await MailService.sendTwoFactorCode(user.email, twoFactorData.code);
+    //
+    //         res.success("code sent to your email");
+    //     } catch (err) {
+    //         next(err);
+    //     }
+    // }
+
+    async verifyTwoFactorCode(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const {code, token} = req.body;
+
+            const sessionData = await verifyTwoFactorCode(token, code);
+
+            res.cookie(COOKIE_CONFIG.name, sessionData.refreshToken, COOKIE_CONFIG.options);
+
+            res.success("welcome back", {
+                user: sessionData.user,
+                accessToken: sessionData.accessToken
+            });
+        } catch (err) {
             next(err);
         }
     }
