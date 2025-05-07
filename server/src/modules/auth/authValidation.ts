@@ -19,5 +19,16 @@ export const registrationSchema = z.object({
     isAcceptedTerms: z.boolean()
 });
 
+export const verifyTokenSchema = z.object({
+    code: z.string(),
+    token: z.string()
+});
+
+export const sendPasswordResetEmailSchema = z.object({
+    email: z.string().email(),
+});
+
 export type LoginData = z.infer<typeof loginSchema>
-export interface IAuthData extends LoginData, IClientMetaData {}
+
+export interface IAuthData extends LoginData, IClientMetaData {
+}

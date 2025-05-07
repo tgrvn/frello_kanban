@@ -1,14 +1,16 @@
 import {Request, Response, NextFunction} from "express";
-import {COOKIE_CONFIG} from "@/shared/utils/constants";
+import {COOKIE_CONFIG, JWT_PASSWORD_RESET_SECRET} from "@/shared/utils/constants";
 import SessionRepository from "@/modules/auth/repositories/SessionRepository";
 import {refreshUserToken} from "@/modules/auth/useCases/refreshUserToken";
 import {registerUser} from "@/modules/auth/useCases/registerUser";
 import {loginUser} from "@/modules/auth/useCases/loginUser";
 import {activateUser} from "@/modules/auth/useCases/activateUser";
 import {UserDTO} from "@/prisma/types";
-import MailService from "@/mailer/MailService";
+import MailService from "@/shared/services/mailer/MailService";
 import ActivationTokenService from "@/modules/auth/services/ActivationTokenService";
 import {verifyTwoFactorCode} from "@/modules/auth/useCases/verifyTwoFactorCode";
+import TokenService from "@/shared/services/TokenService";
+import UserService from "@/modules/users/UserService";
 
 class AuthController {
     async login(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -68,6 +70,34 @@ class AuthController {
         }
     }
 
+    async sendPasswordResetEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const {email} = req.body;
+
+            const user = await UserService.findOrThrowBy({email});
+            const token = TokenService.generatePasswordResetEmail(user.id);
+            await MailService.sendForgotPasswordEmail(user.email, token);
+
+            res.success("password reset email sent");
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async resetForgottenPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const token = req.params.token;
+            const {password} = req.body;
+
+            const payload = TokenService.verifyToken<{ userId: string }>(token, JWT_PASSWORD_RESET_SECRET);
+            await UserService.changePassword(payload.userId, password);
+
+            res.success("password changed");
+        } catch (err) {
+            next(err);
+        }
+    }
+
     async sendActivationEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const user = req.user as UserDTO;
@@ -91,19 +121,6 @@ class AuthController {
             next(err);
         }
     }
-
-    // async generateTwoFactorCode(req: Request, res: Response, next: NextFunction): Promise<void> {
-    //     try {
-    //         const user = req.user as UserDTO;
-    //
-    //         const twoFactorData = await TwoFactorCodeService.generate(user.id, req.clientMetaData);
-    //         await MailService.sendTwoFactorCode(user.email, twoFactorData.code);
-    //
-    //         res.success("code sent to your email");
-    //     } catch (err) {
-    //         next(err);
-    //     }
-    // }
 
     async verifyTwoFactorCode(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
