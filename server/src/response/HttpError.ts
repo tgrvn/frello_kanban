@@ -1,4 +1,4 @@
-type HttpErrorsPayload = { [key: string]: any };
+export type HttpErrorsPayload = { [key: string]: any };
 
 export enum HttpErrorCode {
     ITERNAL_SERVER_ERROR = 'ITERNAL_SERVER_ERROR',
@@ -39,7 +39,7 @@ class HttpError extends Error {
 
     static validationError(
         message: string = "validation error",
-        details: HttpErrorsPayload[],
+        details?: HttpErrorsPayload[],
         code: HttpErrorCode = HttpErrorCode.VALIDATION_ERROR,
     ): HttpError {
         return new HttpError(400, message, code, details);
@@ -57,11 +57,12 @@ class HttpError extends Error {
     }
 
     static twoFactorRequired(
+        token: string,
         message: string = "2FA required",
-        code: HttpErrorCode = HttpErrorCode.TWO_FACTOR_ERROR
+        code: HttpErrorCode = HttpErrorCode.TWO_FACTOR_ERROR,
     ): HttpError {
         {
-            return new HttpError(499, message, code);
+            return new HttpError(499, message, code, {token});
         }
     }
 }

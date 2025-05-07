@@ -19,6 +19,7 @@ export const registerUser = async ({email, password, ip, userAgent, fingerprint,
         fingerprint,
         deviceId,
     });
+    await UserDeviceService.makeDeviceTrusted(device.deviceId, user.id);
 
     //const url = FRONTEND_URL + '/activate/' + activationToken;
     //for test:

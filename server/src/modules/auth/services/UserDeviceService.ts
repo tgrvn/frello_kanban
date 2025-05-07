@@ -13,8 +13,8 @@ class UserDeviceService {
         });
     }
 
-    async makeDeviceTrusted(deviceId: string, userId: string): Promise<void> {
-        await UserDeviceRepository.updateByPair(userId, deviceId, {isTrusted: true});
+    async makeDeviceTrusted(deviceId: string, userId: string): Promise<UserDevice> {
+        return await UserDeviceRepository.updateByPair(userId, deviceId, {isTrusted: true});
     }
 
     async verifyAndUpdateDeviceMeta(
