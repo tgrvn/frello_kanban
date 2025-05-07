@@ -9,11 +9,19 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "typeRoots": [
-      "./src/types", "./node_modules/@types"],
+      "./src/shared/types",
+      "./node_modules/@types"
+    ],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     }
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

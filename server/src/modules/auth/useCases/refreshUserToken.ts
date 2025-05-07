@@ -3,7 +3,7 @@ import SessionService, {ITokensPair} from "@/modules/auth/services/SessionServic
 import UserService from "@/modules/users/UserService";
 import SessionRepository from "@/modules/auth/repositories/SessionRepository";
 import UserDeviceService from "@/modules/auth/services/UserDeviceService";
-import {IClientMetaData} from "@/types/express";
+import {IClientMetaData} from "@/shared/types/express";
 import HttpError from "@/response/HttpError";
 import MailService from "@/shared/services/mailer/MailService";
 import TokenService from "@/shared/services/TokenService";

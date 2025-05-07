@@ -1,6 +1,6 @@
 import UserService from "@/modules/users/UserService";
 import ActivationTokenRepository from "@/modules/auth/repositories/ActivationTokenRepository";
-import {IClientMetaData} from "@/types/express";
+import {IClientMetaData} from "@/shared/types/express";
 import UserDeviceService from "@/modules/auth/services/UserDeviceService";
 import TokenService from "@/shared/services/TokenService";
 import {JWT_ACTIVATION_SECRET} from "@/shared/utils/constants";

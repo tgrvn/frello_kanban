@@ -1,6 +1,6 @@
 import {z} from "zod";
 import UserRepository from "@/modules/users/UserRepository";
-import {IClientMetaData} from "@/types/express";
+import {IClientMetaData} from "@/shared/types/express";
 
 export const loginSchema = z.object({
     email: z.string().email(),

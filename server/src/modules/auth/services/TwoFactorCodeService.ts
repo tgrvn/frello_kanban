@@ -1,7 +1,7 @@
 import TwoFactorCodeRepository from "@/modules/auth/repositories/TwoFactorCodeRepository";
 import HttpError from "@/response/HttpError";
 import jwt from "jsonwebtoken";
-import {IClientMetaData} from "@/types/express";
+import {IClientMetaData} from "@/shared/types/express";
 import {TWO_FACTOR_MAX_AGE, JWT_TWO_FACTOR_SECRET} from "@/shared/utils/constants";
 import {todayPlus} from "@/shared/utils/helpers";
 import TokenService from "@/shared/services/TokenService";
