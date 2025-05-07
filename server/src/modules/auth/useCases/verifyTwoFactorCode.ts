@@ -12,9 +12,7 @@ export const verifyTwoFactorCode = async (token: string, code: string): Promise<
     const user = await UserService.findOrThrowById(userId);
     if (!user.isActivated) await UserService.activate(user.id);
 
-    const device = await UserDeviceRepository.createOrUpdate(user.id, deviceId, {ip, fingerprint, userAgent});
-
-    console.log("device", device);
+    const device = await UserDeviceRepository.createOrUpdate(user.id, {ip, deviceId, fingerprint, userAgent});
 
     const tokens = SessionService.generateTokens(user);
     const session = await SessionService.create({

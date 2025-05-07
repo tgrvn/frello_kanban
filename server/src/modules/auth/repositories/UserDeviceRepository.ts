@@ -12,11 +12,11 @@ class UserDeviceRepository {
         return prisma.userDevice.update({data, where: {user_device_pair: {userId, deviceId}}})
     }
 
-    async createOrUpdate(userId: string, deviceId: string, data: Omit<UserDeviceCreateInput, "user">) {
+    async createOrUpdate(userId: string, data: Omit<UserDeviceCreateInput, "user">) {
         return prisma.userDevice.upsert({
-            where: {user_device_pair: {userId, deviceId}},
+            where: {user_device_pair: {userId, deviceId: data.deviceId}},
             update: {isTrusted: true},
-            create: {...data, deviceId, isTrusted: true, user: {connect: {id: userId}}}
+            create: {...data, isTrusted: true, user: {connect: {id: userId}}}
         });
     }
 
