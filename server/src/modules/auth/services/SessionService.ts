@@ -1,11 +1,10 @@
 import SessionRepository from "@/modules/auth/repositories/SessionRepository";
-import {Prisma, Session} from "@/prisma/client";
-import jwt from "jsonwebtoken";
-import {ACCESS_MAX_AGE, JWT_ACCESS_SECRET, JWT_REFRESH_SECRET, REFRESH_MAX_AGE} from "@/shared/utils/constants";
+import {Session} from "@/prisma/client";
+import {REFRESH_MAX_AGE} from "@/shared/utils/constants";
 import HttpError from "@/response/HttpError";
 import {CreateSessionDTO, UserDTO} from "@/prisma/types";
 import {todayPlus} from "@/shared/utils/helpers";
-import prisma from "@/prisma/prisma";
+import TokenService from "@/shared/services/TokenService";
 
 export interface ITokensPair {
     accessToken: string;
@@ -37,25 +36,11 @@ class SessionService {
         });
     }
 
-    // tokens logic
-    generateTokens(payload: UserDTO): ITokensPair {
-        const accessToken = jwt.sign(payload, JWT_ACCESS_SECRET, {expiresIn: `${ACCESS_MAX_AGE}m`});
-        const refreshToken = jwt.sign(payload, JWT_REFRESH_SECRET, {expiresIn: `${REFRESH_MAX_AGE}d`});
+    generateTokens(user: UserDTO): ITokensPair {
+        const accessToken = TokenService.generateAccessToken(user);
+        const refreshToken = TokenService.generateRefreshToken(user);
 
         return {accessToken, refreshToken};
-    }
-
-    verifyRefreshToken(token: string) {
-        try {
-            const payload = jwt.verify(token, JWT_REFRESH_SECRET) as UserDTO;
-
-            if (!payload || !payload.id) throw HttpError.unauthenticated();
-
-            return payload;
-        } catch (err) {
-            console.log(err);
-            throw HttpError.unauthenticated("token verification failed");
-        }
     }
 }
 

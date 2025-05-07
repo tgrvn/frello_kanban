@@ -5,7 +5,9 @@ import SessionRepository from "@/modules/auth/repositories/SessionRepository";
 import UserDeviceService from "@/modules/auth/services/UserDeviceService";
 import {IClientMetaData} from "@/types/express";
 import HttpError from "@/response/HttpError";
-import MailService from "@/mailer/MailService";
+import MailService from "@/shared/services/mailer/MailService";
+import TokenService from "@/shared/services/TokenService";
+import {JWT_REFRESH_SECRET} from "@/shared/utils/constants";
 
 export const refreshUserToken = async ({token, ip, userAgent, fingerprint, deviceId}: IClientMetaData & {
     token: string
@@ -15,7 +17,7 @@ export const refreshUserToken = async ({token, ip, userAgent, fingerprint, devic
     const session = await SessionService.findOrFail(token);
     await SessionRepository.deleteByToken(session.token);
 
-    const payload = SessionService.verifyRefreshToken(session.token);
+    const payload = TokenService.verifyToken<UserDTO>(session.token, JWT_REFRESH_SECRET);
     const user = await UserService.verifyCredentials(payload.email);
 
     const device = await UserDeviceService.verifyAndUpdateDeviceMeta(

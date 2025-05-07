@@ -2,8 +2,13 @@ import TwoFactorCodeRepository from "@/modules/auth/repositories/TwoFactorCodeRe
 import HttpError from "@/response/HttpError";
 import jwt from "jsonwebtoken";
 import {IClientMetaData} from "@/types/express";
-import {TWO_FACTOR_MAX_AGE, TWO_FACTOR_SECRET} from "@/shared/utils/constants";
+import {TWO_FACTOR_MAX_AGE, JWT_TWO_FACTOR_SECRET} from "@/shared/utils/constants";
 import {todayPlus} from "@/shared/utils/helpers";
+import TokenService from "@/shared/services/TokenService";
+
+export interface ITwoFactorPayload extends IClientMetaData {
+    userId: string;
+}
 
 class TwoFactorCodeService {
     async generate(userId: string): Promise<string> {
@@ -21,7 +26,7 @@ class TwoFactorCodeService {
     }> {
         const code = await this.generate(userId);
         const expiresIn = todayPlus.minutes(TWO_FACTOR_MAX_AGE);
-        const token = this.generateToken(userId, {deviceId, fingerprint, ip, userAgent});
+        const token = TokenService.generateTwoFactorToken({userId, deviceId, fingerprint, ip, userAgent});
         await TwoFactorCodeRepository.create(userId, code, expiresIn);
 
         return {code, token}
@@ -40,24 +45,6 @@ class TwoFactorCodeService {
         }
 
         await TwoFactorCodeRepository.deleteByUniquePair(userId, code);
-    }
-
-    generateToken(userId: string, {deviceId, fingerprint, ip, userAgent}: IClientMetaData): string {
-        return jwt.sign({
-            userId,
-            deviceId,
-            fingerprint,
-            ip,
-            userAgent
-        }, TWO_FACTOR_SECRET, {expiresIn: `${TWO_FACTOR_MAX_AGE}m`});
-    }
-
-    verifyToken(token: string): { userId: string } & IClientMetaData {
-        try {
-            return jwt.verify(token, TWO_FACTOR_SECRET) as { userId: string } & IClientMetaData;
-        } catch (err) {
-            throw HttpError.iternalServerError();
-        }
     }
 }
 
