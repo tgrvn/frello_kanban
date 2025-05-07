@@ -5,7 +5,7 @@ import {UserDTO} from "@/prisma/types";
 import UserDeviceService from "@/modules/auth/services/UserDeviceService";
 import HttpError from "@/response/HttpError";
 import TwoFactorCodeService from "@/modules/auth/services/TwoFactorCodeService";
-import MailService from "@/mailer/MailService";
+import MailService from "@/shared/services/mailer/MailService";
 
 export const loginUser = async ({email, password, ip, userAgent, deviceId, fingerprint}: IAuthData): Promise<{
     user: UserDTO;
@@ -22,6 +22,7 @@ export const loginUser = async ({email, password, ip, userAgent, deviceId, finge
     );
 
     const tokens = SessionService.generateTokens(user);
+
     const session = await SessionService.create({
         userId: user.id,
         token: tokens.refreshToken,

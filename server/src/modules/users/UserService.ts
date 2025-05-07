@@ -4,7 +4,7 @@ import {Prisma, User} from "@/prisma/client";
 import {UserDTO} from "@/prisma/types";
 import HttpError from "@/response/HttpError";
 import UserCreateInput = Prisma.UserCreateInput;
-import prisma from "@/prisma/prisma";
+import UserWhereUniqueInput = Prisma.UserWhereUniqueInput;
 
 class UserService {
     async verifyCredentials(email: string, password?: string): Promise<UserDTO> {
@@ -12,16 +12,23 @@ class UserService {
         if (!user) throw HttpError.unauthenticated("invalid credentials");
 
         if (password) {
-            const isPasswordValid = bcrypt.compare(user.password, password);
+            const isPasswordValid = await bcrypt.compare(password, user.password);
             if (!isPasswordValid) throw HttpError.unauthenticated("invalid credentials");
         }
 
         return this.makeUserDto(user);
     }
 
-    async findOrThrowById(id: string): Promise<UserDTO> {
-        const user = await prisma.user.findUnique({where: {id}});
-        if (!user) throw HttpError.iternalServerError();
+    async findOrThrowBy(by: UserWhereUniqueInput): Promise<UserDTO> {
+        const user = await UserRepository.findUnique(by);
+        if (!user) throw HttpError.iternalServerError("user not found");
+
+        return this.makeUserDto(user);
+    }
+
+    async changePassword(id: string, password: string): Promise<UserDTO> {
+        const hashedPassword = await this.hashPassword(password);
+        const user = await UserRepository.edit(id, {password: hashedPassword});
 
         return this.makeUserDto(user);
     }
@@ -32,10 +39,14 @@ class UserService {
     }
 
     async create({email, password}: UserCreateInput): Promise<UserDTO> {
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await this.hashPassword(password);
         const user = await UserRepository.create({email, password: hashedPassword});
 
         return this.makeUserDto(user);
+    }
+
+    async hashPassword(password: string): Promise<string> {
+        return await bcrypt.hash(password, 12);
     }
 
     makeUserDto(user: User | null): UserDTO {

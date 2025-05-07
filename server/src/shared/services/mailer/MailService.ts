@@ -20,16 +20,17 @@ class MailService {
             hbs({
                 viewEngine: {
                     extname: ".hbs",
-                    partialsDir: path.resolve("./src/mailer/templates"),
+                    partialsDir: path.resolve("./src/shared/services/mailer/templates"),
                     defaultLayout: false,
                 },
-                viewPath: path.resolve("./src/mailer/templates"),
+                viewPath: path.resolve("./src/shared/services/mailer/templates"),
                 extName: ".hbs",
             })
         );
     }
 
-    async sendActivationEmail(to: string, activationLink: string): Promise<void> {
+    async sendActivationEmail(to: string, token: string): Promise<void> {
+        const activationLink = 'http://localhost:3000/api/auth/activate/' + token;
         try {
             const message = await this.transporter.sendMail({
                 from: this.from,
@@ -37,13 +38,34 @@ class MailService {
                 subject: "Activation Email",
                 template: "activation",
                 context: {
-                    activationLink,
+                    activationLink
                 },
             } as SendMailOptions);
 
             console.log(message);
         } catch (err) {
             throw HttpError.iternalServerError("failed to send activation email");
+        }
+    }
+
+    async sendForgotPasswordEmail(to: string, token: string): Promise<void> {
+        const resetLink = 'http://localhost:3000/api/auth/forgot-password/reset-password/' + token;
+
+        try {
+            const message = await this.transporter.sendMail({
+                from: this.from,
+                to,
+                subject: "Reset Your Password",
+                template: "forgotPassword",
+                context: {
+                    resetLink,
+                },
+            } as SendMailOptions);
+
+            console.log(message);
+        } catch (err) {
+            console.log(err)
+            throw HttpError.iternalServerError("failed to send forgot password email");
         }
     }
 
