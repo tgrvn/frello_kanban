@@ -7,12 +7,12 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
     volumes:
-      - ./docker/pgdata:/var/lib/postgresql/data
+      - ./server/docker/pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
   mailhog:
-      image: mailhog/mailhog
-      ports:
-        - "1025:1025"  # SMTP
-        - "8025:8025"  # Web UI
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
